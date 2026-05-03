@@ -1,0 +1,9 @@
+from building import *
+
+cwd = GetCurrentDir()
+src = ['drv_led.c']
+CPPPATH = [cwd]
+
+group = DefineGroup('Led', src, depend = ['BSP_USING_LED'], CPPPATH = CPPPATH)
+
+Return('group')

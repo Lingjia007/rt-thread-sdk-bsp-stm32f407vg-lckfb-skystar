@@ -17,17 +17,13 @@
 #include <rtdevice.h>
 #endif /* RT_USING_NANO */
 
-#define GPIO_LED    GET_PIN(B, 2)
-
 int main(void)
 {
-    rt_pin_mode(GPIO_LED, PIN_MODE_OUTPUT);
-
     while (1)
     {
-        rt_pin_write(GPIO_LED, PIN_HIGH);
-        rt_thread_mdelay(500);
-        rt_pin_write(GPIO_LED, PIN_LOW);
+//        rt_pin_write(GPIO_LED, PIN_HIGH);
+//        rt_thread_mdelay(500);
+//        rt_pin_write(GPIO_LED, PIN_LOW);
         rt_thread_mdelay(500);
     }
 }

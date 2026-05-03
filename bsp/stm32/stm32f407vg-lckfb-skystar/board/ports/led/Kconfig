@@ -1,0 +1,49 @@
+menu "LED Driver"
+
+config BSP_USING_LED
+    bool "Enable onboard LED"
+    default n
+    select BSP_USING_GPIO
+
+if BSP_USING_LED
+
+choice
+    prompt "Default boot mode"
+    default BSP_LED_BOOT_MODE_GPIO
+
+    config BSP_LED_BOOT_MODE_GPIO
+        bool "GPIO blink"
+
+    config BSP_LED_BOOT_MODE_PWM
+        bool "PWM breathe"
+
+    config BSP_LED_BOOT_MODE_OFF
+        bool "Off"
+endchoice
+
+config BSP_LED_BOOT_BLINK
+    bool
+    default y if BSP_LED_BOOT_MODE_GPIO
+
+config BSP_LED_BOOT_BREATHE
+    bool
+    default y if BSP_LED_BOOT_MODE_PWM
+
+config BSP_LED_BLINK_INTERVAL
+    int "Blink interval (ms)"
+    default 500
+    range 50 5000
+
+config BSP_LED_BREATHE_PERIOD
+    int "Breathing cycle period (ms)"
+    default 3000
+    range 500 10000
+
+config BSP_LED_SW_PWM_PERIOD
+    int "Software PWM period (ms)"
+    default 20
+    range 5 50
+
+endif
+
+endmenu

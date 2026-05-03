@@ -424,10 +424,6 @@
 
 /* Hardware Drivers Config */
 
-/* Onboard Peripheral Drivers */
-
-/* end of Onboard Peripheral Drivers */
-
 /* On-chip Peripheral Drivers */
 
 #define BSP_USING_GPIO
@@ -441,6 +437,22 @@
 #define BSP_USING_SPI
 #define BSP_USING_SPI1
 /* end of On-chip Peripheral Drivers */
+
+/* Onboard Peripheral Drivers */
+
+/* LED Driver */
+
+#define BSP_USING_LED
+#define BSP_LED_BOOT_MODE_PWM
+#define BSP_LED_BOOT_BREATHE
+#define BSP_LED_BLINK_INTERVAL 500
+#define BSP_LED_BREATHE_PERIOD 3600
+#define BSP_LED_SW_PWM_PERIOD 20
+/* end of LED Driver */
+/* end of Onboard Peripheral Drivers */
+
+/* Board extended module Drivers */
+
 /* end of Hardware Drivers Config */
 
 #endif
