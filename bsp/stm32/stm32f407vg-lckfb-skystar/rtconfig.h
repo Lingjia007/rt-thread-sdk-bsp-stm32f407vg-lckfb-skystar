@@ -132,7 +132,7 @@
 #define FINSH_USING_HISTORY
 #define FINSH_HISTORY_LINES 5
 #define FINSH_USING_SYMTAB
-#define FINSH_CMD_SIZE 80
+#define FINSH_CMD_SIZE 256
 #define MSH_USING_BUILT_IN_COMMANDS
 #define FINSH_USING_DESCRIPTION
 #define FINSH_ARG_MAX 10
@@ -146,10 +146,13 @@
 
 #define RT_USING_DEVICE_IPC
 #define RT_UNAMED_PIPE_NUMBER 64
+#define RT_USING_SYSTEM_WORKQUEUE
+#define RT_SYSTEM_WORKQUEUE_STACKSIZE 2048
+#define RT_SYSTEM_WORKQUEUE_PRIORITY 23
 #define RT_USING_SERIAL
 #define RT_USING_SERIAL_V1
 #define RT_SERIAL_USING_DMA
-#define RT_SERIAL_RB_BUFSZ 64
+#define RT_SERIAL_RB_BUFSZ 1024
 #define RT_USING_SPI
 #define RT_USING_SPI_ISR
 #define RT_USING_SFUD
@@ -186,6 +189,28 @@
 
 /* Network */
 
+#define RT_USING_SAL
+#define SAL_INTERNET_CHECK
+#define SOCKET_TABLE_STEP_LEN 4
+
+/* Docking with protocol stacks */
+
+#define SAL_USING_AT
+/* end of Docking with protocol stacks */
+#define SAL_SOCKETS_NUM 16
+#define RT_USING_NETDEV
+#define NETDEV_USING_IFCONFIG
+#define NETDEV_USING_PING
+#define NETDEV_USING_NETSTAT
+#define NETDEV_USING_AUTO_DEFAULT
+#define NETDEV_IPV4 1
+#define NETDEV_IPV6 0
+#define RT_USING_AT
+#define AT_USING_CLIENT
+#define AT_CLIENT_NUM_MAX 1
+#define AT_USING_SOCKET
+#define AT_USING_CLI
+#define AT_SW_VERSION_NUM 0x10301
 /* end of Network */
 
 /* Memory protection */
@@ -232,6 +257,18 @@
 
 /* end of CYW43439 WiFi */
 /* end of Wi-Fi */
+#define PKG_USING_AT_DEVICE
+#define AT_DEVICE_USING_ESP8266
+#define AT_DEVICE_ESP8266_INIT_ASYN
+#define AT_DEVICE_ESP8266_SOCKET
+#define AT_DEVICE_ESP8266_SAMPLE
+#define AT_DEVICE_ESP8266_SAMPLE_BSP_TAKEOVER
+#define ESP8266_SAMPLE_WIFI_SSID "iQOO Neo8 Pro"
+#define ESP8266_SAMPLE_WIFI_PASSWORD "12345678"
+#define ESP8266_SAMPLE_CLIENT_NAME "uart1"
+#define ESP8266_SAMPLE_RECV_BUFF_LEN 4096
+#define PKG_USING_AT_DEVICE_LATEST_VERSION
+#define PKG_AT_DEVICE_VER_NUM 0x99999
 
 /* IoT Cloud */
 
@@ -449,6 +486,14 @@
 #define BSP_LED_BREATHE_PERIOD 3600
 #define BSP_LED_SW_PWM_PERIOD 20
 /* end of LED Driver */
+
+/* ESP8266 Driver */
+
+#define BSP_USING_ESP8266
+
+/* May adjust RT_SERIAL_RB_BUFSZ up to 512 if using the Serial V1 device driver */
+
+/* end of ESP8266 Driver */
 /* end of Onboard Peripheral Drivers */
 
 /* Board extended module Drivers */

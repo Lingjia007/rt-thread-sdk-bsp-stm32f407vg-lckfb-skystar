@@ -54,6 +54,7 @@ endmenu
 menu "Onboard Peripheral Drivers"
 
     rsource "ports/led/Kconfig"
+    rsource "ports/esp8266-01s/Kconfig"
 
 endmenu
 

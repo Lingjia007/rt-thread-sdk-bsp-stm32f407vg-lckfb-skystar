@@ -1,0 +1,9 @@
+from building import *
+
+cwd = GetCurrentDir()
+src = ['drv_esp8266.c']
+CPPPATH = [cwd]
+
+group = DefineGroup('Esp8266', src, depend = ['BSP_USING_ESP8266'], CPPPATH = CPPPATH)
+
+Return('group')

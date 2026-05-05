@@ -327,7 +327,7 @@
             <uC99>1</uC99>
             <uGnu>0</uGnu>
             <useXO>0</useXO>
-            <v6Lang>3</v6Lang>
+            <v6Lang>5</v6Lang>
             <v6LangP>3</v6LangP>
             <vShortEn>1</vShortEn>
             <vShortWch>1</vShortWch>
@@ -336,9 +336,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls />
-              <Define>STM32F407xx, RT_USING_ARMLIBC, __RTTHREAD__, __CLK_TCK=RT_TICK_PER_SECOND, RT_USING_LIBC, USE_HAL_DRIVER, __STDC_LIMIT_MACROS</Define>
+              <Define>__STDC_LIMIT_MACROS, __CLK_TCK=RT_TICK_PER_SECOND, RT_USING_ARMLIBC, USE_HAL_DRIVER, RT_USING_LIBC, __RTTHREAD__, STM32F407xx</Define>
               <Undefine />
-              <IncludePath>..\..\..\components\libc\posix\io\eventfd;packages\stm32f4_hal_driver-latest\Inc\Legacy;..\..\..\components\net\utest;..\..\..\components\drivers\phy;packages\stm32f4_hal_driver-latest\Inc;..\..\..\components\drivers\include;..\..\..\components\libc\compilers\common\extension\fcntl\octal;..\..\..\components\libc\compilers\common\extension;..\..\..\libcpu\arm\cortex-m4;..\..\..\components\drivers\include;board;..\..\..\include;..\..\..\components\finsh;board\ports\led;..\..\..\components\drivers\include;..\..\..\components\drivers\smp_call;packages\CMSIS-Core-latest\Include;..\..\..\components\drivers\include;..\..\..\components\drivers\include;..\..\..\components\drivers\spi;..\libraries\HAL_Drivers\drivers\config;packages\stm32f4_cmsis_driver-latest\Include;..\libraries\HAL_Drivers;..\..\..\components\libc\compilers\common\include;..\..\..\components\libc\posix\io\poll;..\..\..\components\drivers\include;..\..\..\components\libc\posix\io\epoll;..\..\..\components\libc\posix\ipc;board\CubeMX_Config\Core\Inc;..\..\..\libcpu\arm\common;..\libraries\HAL_Drivers\drivers;.;..\..\..\components\drivers\include;..\..\..\components\drivers\spi\sfud\inc;applications;..\libraries\HAL_Drivers\drivers\drv_flash</IncludePath>
+              <IncludePath>..\..\..\components\libc\compilers\common\include;packages\at_device-latest\class\esp8266;board\CubeMX_Config\Core\Inc;applications;..\..\..\components\libc\posix\io\epoll;..\..\..\libcpu\arm\common;packages\at_device-latest\inc;..\..\..\components\drivers\include;..\..\..\components\drivers\phy;..\..\..\components\drivers\include;..\..\..\components\net\sal\include\socket;packages\stm32f4_hal_driver-latest\Inc\Legacy;..\..\..\libcpu\arm\cortex-m4;..\..\..\components\drivers\smp_call;..\..\..\components\net\netdev\include;..\..\..\components\net\sal\include\socket\sys_socket;.;board\ports\led;..\..\..\components\finsh;..\..\..\components\net\at\include;packages\CMSIS-Core-latest\Include;..\..\..\components\drivers\include;..\..\..\components\libc\compilers\common\extension\fcntl\octal;..\..\..\components\libc\posix\ipc;packages\stm32f4_cmsis_driver-latest\Include;..\..\..\components\libc\posix\io\eventfd;..\..\..\components\drivers\spi;..\..\..\components\net\sal\include;..\..\..\components\drivers\include;..\..\..\components\libc\compilers\common\extension;..\..\..\components\net\sal\impl;..\..\..\components\net\utest;board\ports\esp8266-01s;..\..\..\components\drivers\include;..\..\..\components\libc\posix\io\poll;..\..\..\components\drivers\include;..\libraries\HAL_Drivers\drivers\config;..\..\..\include;..\..\..\components\drivers\spi\sfud\inc;..\..\..\components\net\at\at_socket;..\libraries\HAL_Drivers;packages\stm32f4_hal_driver-latest\Inc;..\libraries\HAL_Drivers\drivers\drv_flash;..\libraries\HAL_Drivers\drivers;..\..\..\components\drivers\include;board</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -386,6 +386,68 @@
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>applications\main.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>AT</GroupName>
+          <Files>
+            <File>
+              <FileName>at_utils.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\components\net\at\src\at_utils.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>at_cli.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\components\net\at\src\at_cli.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>at_client.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\components\net\at\src\at_client.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>at_socket.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\components\net\at\at_socket\at_socket.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>at_device</GroupName>
+          <Files>
+            <File>
+              <FileName>at_device.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>packages\at_device-latest\src\at_device.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>at_device_esp8266.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>packages\at_device-latest\class\esp8266\at_device_esp8266.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>at_socket_esp8266.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>packages\at_device-latest\class\esp8266\at_socket_esp8266.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>at_sample_esp8266.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>packages\at_device-latest\samples\at_sample_esp8266.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -802,6 +864,16 @@
               <FileName>board.c</FileName>
               <FileType>1</FileType>
               <FilePath>board\board.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Esp8266</GroupName>
+          <Files>
+            <File>
+              <FileName>drv_esp8266.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>board\ports\esp8266-01s\drv_esp8266.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1225,6 +1297,44 @@
               <FileName>rt_vsscanf.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\src\klibc\rt_vsscanf.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>SAL</GroupName>
+          <Files>
+            <File>
+              <FileName>netdev.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\components\net\netdev\src\netdev.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>netdev_ipaddr.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\components\net\netdev\src\netdev_ipaddr.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>af_inet_at.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\components\net\sal\impl\af_inet_at.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>net_netdb.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\components\net\sal\socket\net_netdb.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>sal_socket.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\components\net\sal\src\sal_socket.c</FilePath>
             </File>
           </Files>
         </Group>

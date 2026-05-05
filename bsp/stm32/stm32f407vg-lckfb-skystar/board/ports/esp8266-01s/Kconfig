@@ -1,0 +1,118 @@
+menu "ESP8266 Driver"
+
+config BSP_USING_ESP8266
+    bool "Enable onboard ESP8266-01S (AT Command, UART1)"
+    default n
+    select BSP_USING_UART
+    select BSP_USING_UART1
+    select RT_USING_AT
+    select AT_USING_CLIENT
+    select PKG_USING_AT_DEVICE
+    select AT_DEVICE_USING_ESP8266
+    select AT_DEVICE_ESP8266_SAMPLE
+    select AT_DEVICE_ESP8266_SAMPLE_BSP_TAKEOVER
+
+if BSP_USING_ESP8266
+
+config ESP8266_SAMPLE_WIFI_SSID
+    string "WiFi SSID"
+    default "rtthread"
+
+config ESP8266_SAMPLE_WIFI_PASSWORD
+    string "WiFi password"
+    default "12345678"
+
+config ESP8266_SAMPLE_CLIENT_NAME
+    string "AT client serial device name"
+    default "uart1"
+
+config ESP8266_SAMPLE_RECV_BUFF_LEN
+    int "AT client receive buffer length"
+    default 512
+    range 256 4096
+
+config BSP_ESP8266_USING_PIN_CONTROL
+    bool "Enable EN/RST pin control"
+    default n
+    select BSP_USING_GPIO
+    help
+        ESP8266-01S EN and RST pins are internally pulled high by default.
+        Enable this option if you need to control these pins via GPIO.
+
+if BSP_ESP8266_USING_PIN_CONTROL
+
+choice
+    prompt "RST pin port"
+    default BSP_ESP8266_RST_PORT_A
+
+config BSP_ESP8266_RST_PORT_A
+    bool "GPIOA"
+
+config BSP_ESP8266_RST_PORT_B
+    bool "GPIOB"
+
+config BSP_ESP8266_RST_PORT_C
+    bool "GPIOC"
+
+config BSP_ESP8266_RST_PORT_D
+    bool "GPIOD"
+
+config BSP_ESP8266_RST_PORT_E
+    bool "GPIOE"
+
+config BSP_ESP8266_RST_PORT_F
+    bool "GPIOF"
+
+config BSP_ESP8266_RST_PORT_G
+    bool "GPIOG"
+
+config BSP_ESP8266_RST_PORT_H
+    bool "GPIOH"
+endchoice
+
+config BSP_ESP8266_RST_PIN_NUM
+    int "RST pin number (0-15)"
+    default 6
+    range 0 15
+
+choice
+    prompt "EN pin port"
+    default BSP_ESP8266_EN_PORT_A
+
+config BSP_ESP8266_EN_PORT_A
+    bool "GPIOA"
+
+config BSP_ESP8266_EN_PORT_B
+    bool "GPIOB"
+
+config BSP_ESP8266_EN_PORT_C
+    bool "GPIOC"
+
+config BSP_ESP8266_EN_PORT_D
+    bool "GPIOD"
+
+config BSP_ESP8266_EN_PORT_E
+    bool "GPIOE"
+
+config BSP_ESP8266_EN_PORT_F
+    bool "GPIOF"
+
+config BSP_ESP8266_EN_PORT_G
+    bool "GPIOG"
+
+config BSP_ESP8266_EN_PORT_H
+    bool "GPIOH"
+endchoice
+
+config BSP_ESP8266_EN_PIN_NUM
+    int "EN pin number (0-15)"
+    default 7
+    range 0 15
+
+endif
+
+comment "May adjust RT_SERIAL_RB_BUFSZ up to 512 if using the Serial V1 device driver"
+
+endif
+
+endmenu
