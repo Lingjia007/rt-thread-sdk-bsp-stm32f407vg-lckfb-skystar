@@ -1,0 +1,6 @@
+#ifndef _ONENET_AUTH_INFO_H_
+#define _ONENET_AUTH_INFO_H_
+
+#define ONENET_AUTH_INFO_STRING "version=2018-10-31&res=products%2FOmZ40ZapAD%2Fdevices%2FSTM32F407VGT6_SKYSTAR&et=1805693871&method=md5&sign=wlMIxICT2EZd0J82j7UA%2Bw%3D%3D"
+
+#endif

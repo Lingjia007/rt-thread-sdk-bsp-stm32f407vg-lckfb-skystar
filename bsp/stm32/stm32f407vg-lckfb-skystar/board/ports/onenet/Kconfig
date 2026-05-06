@@ -1,0 +1,154 @@
+menu "Board Support Packages"
+
+menuconfig BSP_USING_ONENET
+    bool "OneNET: China Mobile OneNet cloud SDK (Local)"
+    default n
+    select PKG_USING_CJSON
+
+if BSP_USING_ONENET
+
+    config BSP_ONENET_USING_SAMPLE
+        bool "Enable OneNET sample"
+        default n
+
+    choice
+        prompt "OneNET protocol"
+        default BSP_ONENET_USING_MQTT
+
+        config BSP_ONENET_USING_MQTT
+            bool "MQTT protocol"
+            select PKG_USING_PAHOMQTT
+
+        config BSP_ONENET_USING_HTTP
+            bool "HTTP protocol"
+            select PKG_USING_WEBCLIENT
+    endchoice
+
+    config BSP_ONENET_AUTO_INIT
+        bool "Enable auto initialize on boot"
+        default n
+        depends on BSP_ONENET_USING_MQTT
+        help
+            Auto connect to OneNET MQTT server on system startup
+
+    config BSP_ONENET_NETDEV_NAME
+        string "Network device name for auto connect"
+        default "esp0"
+        depends on BSP_ONENET_AUTO_INIT
+        help
+            Specify the network device name to check connection status before MQTT connect.
+            The MQTT will auto connect when the network device is link up.
+            Examples: esp0, e0, wlan0
+
+    config BSP_ONENET_AUTO_RECONNECT
+        bool "Enable auto reconnect when network disconnected"
+        default y
+        depends on BSP_ONENET_AUTO_INIT
+        help
+            Auto reconnect to OneNET MQTT server when network link up again
+
+    choice
+        prompt "Device type"
+        default BSP_ONENET_DEVICE_DIRECT
+        depends on BSP_ONENET_USING_MQTT
+
+        config BSP_ONENET_DEVICE_DIRECT
+            bool "Direct connection device"
+
+        config BSP_ONENET_DEVICE_GATEWAY
+            bool "Gateway device"
+    endchoice
+
+    menu "MQTT Topics Configuration"
+        depends on BSP_ONENET_USING_MQTT
+
+        config BSP_ONENET_USING_PROPERTY_POST
+            bool "Enable property post reply topic"
+            default y
+            help
+                Subscribe to property post reply topic: $sys/{pid}/{device-name}/thing/property/post/reply
+
+        config BSP_ONENET_USING_PROPERTY_SET
+            bool "Enable property set topic"
+            default y
+            help
+                Subscribe to property set topic: $sys/{pid}/{device-name}/thing/property/set
+
+        config BSP_ONENET_USING_PROPERTY_GET
+            bool "Enable property get topic"
+            default y
+            help
+                Subscribe to property get topic: $sys/{pid}/{device-name}/thing/property/get
+
+        config BSP_ONENET_USING_PROPERTY_DESIRED_GET
+            bool "Enable property desired get reply topic"
+            default y
+            help
+                Subscribe to property desired get reply topic: $sys/{pid}/{device-name}/thing/property/desired/get/reply
+
+        config BSP_ONENET_USING_PROPERTY_DESIRED_DELETE
+            bool "Enable property desired delete reply topic"
+            default y
+            help
+                Subscribe to property desired delete reply topic: $sys/{pid}/{device-name}/thing/property/desired/delete/reply
+
+        config BSP_ONENET_USING_OTA
+            bool "Enable OTA upgrade topic"
+            default y
+            help
+                Subscribe to OTA inform topic: $sys/{pid}/{device-name}/ota/inform
+    endmenu
+
+    menu "Auto Reply Configuration"
+        depends on BSP_ONENET_USING_MQTT
+
+        config BSP_ONENET_AUTO_REPLY_SET
+            bool "Enable auto reply for property set"
+            default y
+            depends on BSP_ONENET_USING_PROPERTY_SET
+            help
+                Auto reply to property set request with success response
+
+        config BSP_ONENET_AUTO_REPLY_GET
+            bool "Enable auto reply for property get"
+            default y
+            depends on BSP_ONENET_USING_PROPERTY_GET
+            help
+                Auto reply to property get request with current property values
+
+        config BSP_ONENET_AUTO_REPLY_OTA
+            bool "Enable auto reply for OTA inform"
+            default y
+            depends on BSP_ONENET_USING_OTA
+            help
+                Auto reply to OTA inform notification
+    endmenu
+
+    config BSP_ONENET_USING_AUTO_REGISTER
+        bool "Enable OneNET automatic register device"
+        default n
+        depends on BSP_ONENET_USING_HTTP
+        help
+            Enable automatic registration device functions, don't need to register on the web page
+
+    config BSP_ONENET_INFO_DEVID
+        string "Device name"
+        default "STM32F407VGT6_SKYSTAR"
+        depends on !BSP_ONENET_USING_AUTO_REGISTER
+        help
+            Device name (not device ID number)
+
+    config BSP_ONENET_INFO_PROID
+        string "Product ID"
+        default "OmZ40ZapAD"
+
+    config BSP_ONENET_REGISTRATION_CODE
+        string "Registration code"
+        default "17eu2xb5k1GtbdY5"
+        depends on BSP_ONENET_USING_AUTO_REGISTER
+        help
+            Product registration code
+
+endif
+
+endmenu

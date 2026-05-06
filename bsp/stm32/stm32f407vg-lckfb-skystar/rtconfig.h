@@ -140,6 +140,14 @@
 
 /* DFS: device virtual file system */
 
+#define RT_USING_DFS
+#define DFS_USING_POSIX
+#define DFS_USING_WORKDIR
+#define DFS_FD_MAX 16
+#define RT_USING_DFS_V1
+#define DFS_FILESYSTEMS_MAX 4
+#define DFS_FILESYSTEM_TYPES_MAX 4
+#define RT_USING_DFS_DEVFS
 /* end of DFS: device virtual file system */
 
 /* Device Drivers */
@@ -177,9 +185,16 @@
 
 /* POSIX (Portable Operating System Interface) layer */
 
+#define RT_USING_POSIX_FS
+#define RT_USING_POSIX_DEVIO
+#define RT_USING_POSIX_POLL
+#define RT_USING_POSIX_SELECT
+#define RT_USING_POSIX_SOCKET
 
 /* Interprocess Communication (IPC) */
 
+#define RT_USING_POSIX_PIPE
+#define RT_USING_POSIX_PIPE_SIZE 512
 
 /* Socket is in the 'Network' category */
 
@@ -197,7 +212,7 @@
 
 #define SAL_USING_AT
 /* end of Docking with protocol stacks */
-#define SAL_SOCKETS_NUM 16
+#define SAL_USING_POSIX
 #define RT_USING_NETDEV
 #define NETDEV_USING_IFCONFIG
 #define NETDEV_USING_PING
@@ -219,6 +234,7 @@
 
 /* Utilities */
 
+#define RT_USING_RESOURCE_ID
 /* end of Utilities */
 
 /* Using USB legacy version */
@@ -234,6 +250,12 @@
 
 /* IoT - internet of things */
 
+#define PKG_USING_PAHOMQTT
+#define PAHOMQTT_PIPE_MODE
+#define RT_PKG_MQTT_THREAD_STACK_SIZE 4096
+#define PKG_PAHOMQTT_SUBSCRIBE_HANDLERS 8
+#define MQTT_DEBUG
+#define PKG_USING_PAHOMQTT_LATEST
 
 /* Wi-Fi */
 
@@ -283,6 +305,8 @@
 
 /* JSON: JavaScript Object Notation, a lightweight data-interchange format */
 
+#define PKG_USING_CJSON
+#define PKG_USING_CJSON_V1717
 /* end of JSON: JavaScript Object Notation, a lightweight data-interchange format */
 
 /* XML: Extensible Markup Language */
@@ -458,6 +482,29 @@
 /* end of RT-Thread online packages */
 #define SOC_FAMILY_STM32
 #define SOC_SERIES_STM32F4
+
+/* Board Support Packages */
+
+#define BSP_USING_ONENET
+#define BSP_ONENET_USING_SAMPLE
+#define BSP_ONENET_USING_MQTT
+#define BSP_ONENET_AUTO_INIT
+#define BSP_ONENET_NETDEV_NAME "esp0"
+#define BSP_ONENET_AUTO_RECONNECT
+#define BSP_ONENET_DEVICE_DIRECT
+
+/* MQTT Topics Configuration */
+
+#define BSP_ONENET_USING_PROPERTY_POST
+#define BSP_ONENET_USING_PROPERTY_SET
+#define BSP_ONENET_USING_PROPERTY_GET
+#define BSP_ONENET_USING_PROPERTY_DESIRED_GET
+#define BSP_ONENET_USING_PROPERTY_DESIRED_DELETE
+#define BSP_ONENET_USING_OTA
+/* end of MQTT Topics Configuration */
+#define BSP_ONENET_INFO_DEVID "STM32F407VGT6_SKYSTAR"
+#define BSP_ONENET_INFO_PROID "OmZ40ZapAD"
+/* end of Board Support Packages */
 
 /* Hardware Drivers Config */
 

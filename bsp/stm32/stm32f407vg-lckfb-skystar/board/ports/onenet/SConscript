@@ -1,0 +1,22 @@
+from building import *
+
+cwd = GetCurrentDir()
+src = []
+
+if GetDepend(['BSP_USING_ONENET']):
+    if GetDepend(['BSP_ONENET_USING_MQTT']):
+        src += Glob('rtthread-package-onenet/src/onenet_mqtt.c')
+    
+    if GetDepend(['BSP_ONENET_USING_HTTP']) or GetDepend(['BSP_ONENET_USING_AUTO_REGISTER']):
+        src += Glob('rtthread-package-onenet/src/onenet_http.c')
+    
+    src += Glob('rtthread-package-onenet/ports/*.c')
+    
+    if GetDepend(['BSP_ONENET_USING_SAMPLE']):
+        src += Glob('rtthread-package-onenet/samples/*.c')
+
+path = [cwd + '/rtthread-package-onenet/inc', cwd + '/rtthread-package-onenet/ports', cwd]
+
+group = DefineGroup('onenet', src, depend = ['BSP_USING_ONENET'], CPPPATH = path)
+
+Return('group')

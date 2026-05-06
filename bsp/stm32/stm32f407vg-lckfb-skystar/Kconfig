@@ -20,6 +20,7 @@ config BOARD_STM32F407VG_LCKFB
 source "$(RTT_DIR)/Kconfig"
 osource "$PKGS_DIR/Kconfig"
 rsource "../libraries/Kconfig"
+rsource "board/ports/onenet/Kconfig"
 
 if !RT_USING_NANO
 rsource "board/Kconfig"
