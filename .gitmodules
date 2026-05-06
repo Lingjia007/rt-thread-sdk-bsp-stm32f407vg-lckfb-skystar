@@ -1,0 +1,3 @@
+[submodule "bsp/stm32/stm32f407vg-lckfb-skystar/board/ports/onenet/rtthread-package-onenet"]
+	path = bsp/stm32/stm32f407vg-lckfb-skystar/board/ports/onenet/rtthread-package-onenet
+	url = https://github.com/Lingjia007/rtthread-package-onenet.git
