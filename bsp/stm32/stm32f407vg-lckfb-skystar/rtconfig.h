@@ -102,8 +102,9 @@
 #define RT_USING_HEAP
 /* end of Memory Management */
 #define RT_USING_DEVICE
+#define RT_USING_DEVICE_OPS
 #define RT_USING_CONSOLE
-#define RT_CONSOLEBUF_SIZE 128
+#define RT_CONSOLEBUF_SIZE 512
 #define RT_CONSOLE_DEVICE_NAME "uart4"
 #define RT_USING_CONSOLE_OUTPUT_CTL
 #define RT_VER_NUM 0x50300
@@ -132,7 +133,7 @@
 #define FINSH_USING_HISTORY
 #define FINSH_HISTORY_LINES 5
 #define FINSH_USING_SYMTAB
-#define FINSH_CMD_SIZE 256
+#define FINSH_CMD_SIZE 512
 #define MSH_USING_BUILT_IN_COMMANDS
 #define FINSH_USING_DESCRIPTION
 #define FINSH_ARG_MAX 10
@@ -149,6 +150,13 @@
 #define DFS_FILESYSTEM_TYPES_MAX 4
 #define RT_USING_DFS_DEVFS
 /* end of DFS: device virtual file system */
+#define RT_USING_FAL
+#define FAL_USING_DEBUG
+#define FAL_PART_HAS_TABLE_CFG
+#define FAL_USING_SFUD_PORT
+#define FAL_USING_NOR_FLASH_DEV_NAME "w25q128"
+#define FAL_DEV_NAME_MAX 24
+#define FAL_DEV_BLK_MAX 6
 
 /* Device Drivers */
 
@@ -161,6 +169,7 @@
 #define RT_USING_SERIAL_V1
 #define RT_SERIAL_USING_DMA
 #define RT_SERIAL_RB_BUFSZ 1024
+#define RT_USING_MTD_NOR
 #define RT_USING_SPI
 #define RT_USING_SPI_ISR
 #define RT_USING_SFUD
@@ -348,6 +357,17 @@
 /* Micrium: Micrium software products porting for RT-Thread */
 
 /* end of Micrium: Micrium software products porting for RT-Thread */
+#define PKG_USING_LITTLEFS
+#define PKG_USING_LITTLEFS_LATEST_VERSION
+#define LFS_READ_SIZE 256
+#define LFS_PROG_SIZE 256
+#define LFS_BLOCK_SIZE 4096
+#define LFS_NO_DEBUG
+#define LFS_CACHE_SIZE 256
+#define LFS_BLOCK_CYCLES 500
+#define LFS_THREADSAFE
+#define LFS_LOOKAHEAD_MAX 128
+#define RT_DEF_LFS_DRIVERS 1
 /* end of system packages */
 
 /* peripheral libraries and drivers */
@@ -483,29 +503,6 @@
 #define SOC_FAMILY_STM32
 #define SOC_SERIES_STM32F4
 
-/* Board Support Packages */
-
-#define BSP_USING_ONENET
-#define BSP_ONENET_USING_SAMPLE
-#define BSP_ONENET_USING_MQTT
-#define BSP_ONENET_AUTO_INIT
-#define BSP_ONENET_NETDEV_NAME "esp0"
-#define BSP_ONENET_AUTO_RECONNECT
-#define BSP_ONENET_DEVICE_DIRECT
-
-/* MQTT Topics Configuration */
-
-#define BSP_ONENET_USING_PROPERTY_POST
-#define BSP_ONENET_USING_PROPERTY_SET
-#define BSP_ONENET_USING_PROPERTY_GET
-#define BSP_ONENET_USING_PROPERTY_DESIRED_GET
-#define BSP_ONENET_USING_PROPERTY_DESIRED_DELETE
-#define BSP_ONENET_USING_OTA
-/* end of MQTT Topics Configuration */
-#define BSP_ONENET_INFO_DEVID "STM32F407VGT6_SKYSTAR"
-#define BSP_ONENET_INFO_PROID "OmZ40ZapAD"
-/* end of Board Support Packages */
-
 /* Hardware Drivers Config */
 
 /* On-chip Peripheral Drivers */
@@ -541,6 +538,47 @@
 /* May adjust RT_SERIAL_RB_BUFSZ up to 512 if using the Serial V1 device driver */
 
 /* end of ESP8266 Driver */
+
+/* W25Q128 SPI Flash Driver */
+
+#define BSP_USING_SPI_FLASH
+#define BSP_SPI_FLASH_CS_PORT_A
+#define BSP_SPI_FLASH_CS_PIN_NUM 4
+#define BSP_SPI_FLASH_USING_FAL
+#define BSP_SPI_FLASH_PARTITION_NAME "spi-flash"
+#define BSP_SPI_FLASH_USING_LITTLEFS
+#define BSP_SPI_FLASH_MOUNT_POINT "/"
+/* end of W25Q128 SPI Flash Driver */
+
+/* Board Support Packages */
+
+#define BSP_USING_ONENET
+#define BSP_ONENET_USING_SAMPLE
+#define BSP_ONENET_USING_MQTT
+#define BSP_ONENET_AUTO_INIT
+#define BSP_ONENET_NETDEV_NAME "esp0"
+#define BSP_ONENET_AUTO_RECONNECT
+#define BSP_ONENET_DEVICE_DIRECT
+
+/* MQTT Topics Configuration */
+
+#define BSP_ONENET_USING_PROPERTY_POST
+#define BSP_ONENET_USING_PROPERTY_SET
+#define BSP_ONENET_USING_PROPERTY_GET
+#define BSP_ONENET_USING_PROPERTY_DESIRED_GET
+#define BSP_ONENET_USING_PROPERTY_DESIRED_DELETE
+#define BSP_ONENET_USING_OTA
+/* end of MQTT Topics Configuration */
+
+/* Auto Reply Configuration */
+
+#define BSP_ONENET_AUTO_REPLY_SET
+#define BSP_ONENET_AUTO_REPLY_GET
+#define BSP_ONENET_AUTO_REPLY_OTA
+/* end of Auto Reply Configuration */
+#define BSP_ONENET_INFO_DEVID "STM32F407VGT6_SKYSTAR"
+#define BSP_ONENET_INFO_PROID "OmZ40ZapAD"
+/* end of Board Support Packages */
 /* end of Onboard Peripheral Drivers */
 
 /* Board extended module Drivers */

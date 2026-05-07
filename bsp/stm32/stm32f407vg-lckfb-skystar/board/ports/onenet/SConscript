@@ -6,6 +6,7 @@ src = []
 if GetDepend(['BSP_USING_ONENET']):
     if GetDepend(['BSP_ONENET_USING_MQTT']):
         src += Glob('rtthread-package-onenet/src/onenet_mqtt.c')
+        src += Glob('rtthread-package-onenet/src/onenet_reply.c')
     
     if GetDepend(['BSP_ONENET_USING_HTTP']) or GetDepend(['BSP_ONENET_USING_AUTO_REGISTER']):
         src += Glob('rtthread-package-onenet/src/onenet_http.c')

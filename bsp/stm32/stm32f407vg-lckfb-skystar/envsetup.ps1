@@ -272,6 +272,7 @@ function global:pkgu {
 }
 
 function global:mdk5 {
+    Write-Host 'Generating MDK5 project and building...' -ForegroundColor Cyan
     Invoke-SconsColored -SconsArgs @('--target=mdk5')
 }
 

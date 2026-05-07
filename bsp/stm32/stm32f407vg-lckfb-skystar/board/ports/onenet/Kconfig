@@ -28,8 +28,10 @@ if BSP_USING_ONENET
         bool "Enable auto initialize on boot"
         default n
         depends on BSP_ONENET_USING_MQTT
+        select BSP_USING_ESP8266
         help
-            Auto connect to OneNET MQTT server on system startup
+            Auto connect to OneNET MQTT server on system startup.
+            This requires ESP8266 network device to be enabled.
 
     config BSP_ONENET_NETDEV_NAME
         string "Network device name for auto connect"

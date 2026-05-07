@@ -1,0 +1,80 @@
+menu "W25Q128 SPI Flash Driver"
+
+config BSP_USING_SPI_FLASH
+    bool "Enable W25Q128 SPI FLASH (SPI1)"
+    select BSP_USING_SPI
+    select BSP_USING_SPI1
+    select RT_USING_SFUD
+    select RT_SFUD_USING_SFDP
+    select RT_SFUD_USING_FLASH_INFO_TABLE
+    default n
+
+if BSP_USING_SPI_FLASH
+
+choice
+    prompt "W25Q128 CS pin port"
+    default BSP_SPI_FLASH_CS_PORT_A
+
+config BSP_SPI_FLASH_CS_PORT_A
+    bool "GPIOA"
+
+config BSP_SPI_FLASH_CS_PORT_B
+    bool "GPIOB"
+
+config BSP_SPI_FLASH_CS_PORT_C
+    bool "GPIOC"
+
+config BSP_SPI_FLASH_CS_PORT_D
+    bool "GPIOD"
+
+config BSP_SPI_FLASH_CS_PORT_E
+    bool "GPIOE"
+
+config BSP_SPI_FLASH_CS_PORT_F
+    bool "GPIOF"
+
+config BSP_SPI_FLASH_CS_PORT_G
+    bool "GPIOG"
+
+config BSP_SPI_FLASH_CS_PORT_H
+    bool "GPIOH"
+endchoice
+
+config BSP_SPI_FLASH_CS_PIN_NUM
+    int "W25Q128 CS pin number (0-15)"
+    default 4
+    range 0 15
+
+config BSP_SPI_FLASH_USING_FAL
+    bool "Enable FAL (Flash Abstraction Layer)"
+    select RT_USING_FAL
+    select FAL_USING_SFUD_PORT
+    select FAL_PART_HAS_TABLE_CFG
+    default n
+
+if BSP_SPI_FLASH_USING_FAL
+
+config BSP_SPI_FLASH_PARTITION_NAME
+    string "W25Q128 partition name"
+    default "filesystem"
+
+config BSP_SPI_FLASH_USING_LITTLEFS
+    bool "Enable LittleFS filesystem on W25Q128"
+    select RT_USING_DFS
+    select RT_USING_MTD_NOR
+    select PKG_USING_LITTLEFS
+    default n
+
+if BSP_SPI_FLASH_USING_LITTLEFS
+
+config BSP_SPI_FLASH_MOUNT_POINT
+    string "W25Q128 mount point"
+    default "/"
+
+endif
+
+endif
+
+endif
+
+endmenu

@@ -23,8 +23,8 @@
 #include "dfs_pcache.h"
 #endif
 
-#define DBG_TAG    "DFS.file"
-#define DBG_LVL    DBG_WARNING
+#define DBG_TAG "DFS.file"
+#define DBG_LVL DBG_WARNING
 #include <rtdbg.h>
 
 #define MAX_RW_COUNT 0xfffc0000
@@ -483,9 +483,9 @@ char *dfs_file_realpath(struct dfs_mnt **mnt, const char *fullpath, int mode)
                         {
                             int pos;
 
-                            while(1)
+                            while (1)
                             {
-                                while(path_len > 0 && path[path_len] != '/')
+                                while (path_len > 0 && path[path_len] != '/')
                                 {
                                     path_len--;
                                 }
@@ -532,7 +532,7 @@ char *dfs_file_realpath(struct dfs_mnt **mnt, const char *fullpath, int mode)
 
         return path;
 
-_ERR_RET:
+    _ERR_RET:
         rt_free(path);
         path = RT_NULL;
     }
@@ -672,7 +672,7 @@ int dfs_file_open(struct dfs_file *file, const char *path, int oflags, mode_t mo
 
                                 if (dfs_is_mounted(mnt) == 0)
                                 {
-                                    vnode = mnt->fs_ops->create_vnode(dentry, oflags & O_DIRECTORY ? FT_DIRECTORY:FT_REGULAR, mode);
+                                    vnode = mnt->fs_ops->create_vnode(dentry, oflags & O_DIRECTORY ? FT_DIRECTORY : FT_REGULAR, mode);
                                 }
 
                                 if (vnode)
@@ -698,7 +698,7 @@ int dfs_file_open(struct dfs_file *file, const char *path, int oflags, mode_t mo
                     rt_bool_t permission = RT_TRUE;
                     file->dentry = dentry;
                     file->vnode = dentry->vnode;
-                    file->fops  = dentry->mnt->fs_ops->default_fops;
+                    file->fops = dentry->mnt->fs_ops->default_fops;
                     file->flags = oflags;
 
                     /* check permission */
@@ -1048,7 +1048,7 @@ ssize_t dfs_file_pwrite(struct dfs_file *file, const void *buf, size_t len, off_
             {
                 len = ret;
                 DLOG(msg, "dfs_file", file->dentry->mnt->fs_ops->name, DLOG_MSG,
-                    "dfs_file_write(fd, buf, %d)", len);
+                     "dfs_file_write(fd, buf, %d)", len);
 
                 if (dfs_is_mounted(file->vnode->mnt) == 0)
                 {
@@ -1131,7 +1131,7 @@ ssize_t dfs_file_write(struct dfs_file *file, const void *buf, size_t len)
             {
                 len = ret;
                 DLOG(msg, "dfs_file", file->dentry->mnt->fs_ops->name, DLOG_MSG,
-                    "dfs_file_write(fd, buf, %d)", len);
+                     "dfs_file_write(fd, buf, %d)", len);
 
                 if (dfs_is_mounted(file->vnode->mnt) == 0)
                 {
@@ -1577,15 +1577,15 @@ int dfs_file_fcntl(int fd, int cmd, unsigned long arg)
             int flags = (int)(rt_base_t)arg;
             int mask =
 #ifdef O_ASYNC
-                        O_ASYNC |
+                O_ASYNC |
 #endif
 #ifdef O_DIRECT
-                        O_DIRECT |
+                O_DIRECT |
 #endif
 #ifdef O_NOATIME
-                        O_NOATIME |
+                O_NOATIME |
 #endif
-                        O_APPEND | O_NONBLOCK;
+                O_APPEND | O_NONBLOCK;
 
             flags &= mask;
             file->flags &= ~mask;
@@ -1897,11 +1897,11 @@ int dfs_file_symlink(const char *target, const char *linkpath)
     {
         if (linkpath[0] != '/')
         {
-           fullpath = dfs_normalize_path(NULL, linkpath);
+            fullpath = dfs_normalize_path(NULL, linkpath);
         }
         else
         {
-            fullpath = (char*)linkpath;
+            fullpath = (char *)linkpath;
         }
 
         /* linkpath should be not exist */
@@ -1916,7 +1916,7 @@ int dfs_file_symlink(const char *target, const char *linkpath)
                 int length = index - fullpath;
                 if (length > 0)
                 {
-                    parent = (char*) rt_malloc (length + 1);
+                    parent = (char *)rt_malloc(length + 1);
                     if (parent)
                     {
                         memcpy(parent, fullpath, length);
@@ -1925,7 +1925,7 @@ int dfs_file_symlink(const char *target, const char *linkpath)
                 }
                 else
                 {
-                    parent = (char*) rt_malloc (1 + 1);
+                    parent = (char *)rt_malloc(1 + 1);
                     if (parent)
                     {
                         parent[0] = '/';
@@ -1962,7 +1962,7 @@ int dfs_file_symlink(const char *target, const char *linkpath)
                                     tmp = path + strlen(parent);
                                     if (*tmp == '/')
                                     {
-                                        tmp ++;
+                                        tmp++;
                                     }
                                 }
                                 else
@@ -2383,7 +2383,7 @@ int dfs_file_isdir(const char *path)
                 DLOG(msg, "dentry", "dfs_file", DLOG_MSG_RET, "return dentry");
                 if (mnt->fs_ops->stat)
                 {
-                    struct stat stat = {0};
+                    struct stat stat = { 0 };
                     DLOG(msg, "dfs_file", mnt->fs_ops->name, DLOG_MSG, "fs_ops->stat(dentry, buf)");
 
                     if (dfs_is_mounted(mnt) == 0)
@@ -2513,13 +2513,13 @@ int dfs_file_mmap2(struct dfs_file *file, struct dfs_mmap2_args *mmap2)
 
 #ifdef RT_USING_FINSH
 
-#define _COLOR_RED      "\033[31m"
-#define _COLOR_GREEN    "\033[32m"
-#define _COLOR_YELLOW   "\033[33m"
-#define _COLOR_BLUE     "\033[34m"
-#define _COLOR_CYAN     "\033[36m"
-#define _COLOR_WHITE    "\033[37m"
-#define _COLOR_NORMAL   "\033[0m"
+#define _COLOR_RED    "\033[31m"
+#define _COLOR_GREEN  "\033[32m"
+#define _COLOR_YELLOW "\033[33m"
+#define _COLOR_BLUE   "\033[34m"
+#define _COLOR_CYAN   "\033[36m"
+#define _COLOR_WHITE  "\033[37m"
+#define _COLOR_NORMAL "\033[0m"
 
 /**
  * @brief List directory contents with colored output
@@ -2596,14 +2596,14 @@ void ls(const char *pathname)
                     {
                         if (S_ISDIR(stat.st_mode))
                         {
-                            rt_kprintf(_COLOR_BLUE "%-20s" _COLOR_NORMAL, dirent.d_name);
+                            rt_kprintf(_COLOR_BLUE "%-40s" _COLOR_NORMAL, dirent.d_name);
                             rt_kprintf(" %-25s\n", "<DIR>");
                         }
                         else if (S_ISLNK(stat.st_mode))
                         {
                             int ret = 0;
 
-                            rt_kprintf(_COLOR_CYAN "%-20s" _COLOR_NORMAL, dirent.d_name);
+                            rt_kprintf(_COLOR_CYAN "%-40s" _COLOR_NORMAL, dirent.d_name);
 
                             ret = dfs_file_readlink(fullpath, link_fn, DFS_PATH_MAX);
                             if (ret > 0)
@@ -2623,7 +2623,7 @@ void ls(const char *pathname)
                                         if (index)
                                         {
                                             int length = index - fullpath;
-                                            char *parent = (char*) rt_malloc (length + 1);
+                                            char *parent = (char *)rt_malloc(length + 1);
                                             if (parent)
                                             {
                                                 rt_memcpy(parent, fullpath, length);
@@ -2635,7 +2635,7 @@ void ls(const char *pathname)
                                                     link_path = link_fn + length;
                                                     if (*link_path == '/')
                                                     {
-                                                        link_path ++;
+                                                        link_path++;
                                                     }
                                                 }
                                                 rt_free(parent);
@@ -2654,23 +2654,23 @@ void ls(const char *pathname)
                         }
                         else if (stat.st_mode & (S_IXUSR | S_IXGRP | S_IXOTH))
                         {
-                            rt_kprintf(_COLOR_GREEN "%-20s" _COLOR_NORMAL, dirent.d_name);
+                            rt_kprintf(_COLOR_GREEN "%-40s" _COLOR_NORMAL, dirent.d_name);
                             rt_kprintf(" %-25lu\n", (unsigned long)stat.st_size);
                         }
                         else if (S_ISCHR(stat.st_mode))
                         {
-                            rt_kprintf(_COLOR_YELLOW "%-20s" _COLOR_NORMAL, dirent.d_name);
+                            rt_kprintf(_COLOR_YELLOW "%-40s" _COLOR_NORMAL, dirent.d_name);
                             rt_kprintf(" %-25s\n", "<CHR>");
                         }
                         else
                         {
-                            rt_kprintf("%-20s", dirent.d_name);
+                            rt_kprintf("%-40s", dirent.d_name);
                             rt_kprintf(" %-25lu\n", (unsigned long)stat.st_size);
                         }
                     }
                     else
                     {
-                        rt_kprintf(_COLOR_RED "%-20s\n" _COLOR_NORMAL, dirent.d_name);
+                        rt_kprintf(_COLOR_RED "%-40s\n" _COLOR_NORMAL, dirent.d_name);
                     }
 
                     rt_free(fullpath);
@@ -2748,7 +2748,7 @@ void cat(const char *filename)
     dfs_file_deinit(&file);
 }
 
-#define BUF_SZ  4096
+#define BUF_SZ 4096
 /**
  * @brief Copy file contents from source to destination
  *
@@ -2845,7 +2845,7 @@ static void copydir(const char *src, const char *dst)
     {
         rt_kprintf("open %s failed\n", src);
         dfs_file_deinit(&file);
-        return ;
+        return;
     }
 
     do
@@ -2893,8 +2893,7 @@ static void copydir(const char *src, const char *dst)
             rt_free(src_entry_full);
             rt_free(dst_entry_full);
         }
-    }
-    while (length > 0);
+    } while (length > 0);
 
     dfs_file_close(&file);
     dfs_file_deinit(&file);
@@ -2978,7 +2977,7 @@ void copy(const char *src, const char *dst)
     if ((flag & FLAG_SRC_IS_DIR) && (flag & FLAG_DST_IS_FILE))
     {
         rt_kprintf("cp faild, cp dir to file is not permitted!\n");
-        return ;
+        return;
     }
 
     /* 3. do copy */

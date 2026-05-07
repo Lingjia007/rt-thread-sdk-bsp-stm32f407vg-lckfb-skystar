@@ -1,0 +1,9 @@
+from building import *
+
+cwd = GetCurrentDir()
+src = ['drv_w25q128.c']
+CPPPATH = [cwd]
+
+group = DefineGroup('W25Q128', src, depend = ['BSP_USING_SPI_FLASH'], CPPPATH = CPPPATH)
+
+Return('group')

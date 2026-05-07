@@ -1,0 +1,31 @@
+#ifndef __DRV_W25Q128_H__
+#define __DRV_W25Q128_H__
+
+#include <rtthread.h>
+
+#ifdef BSP_USING_SPI_FLASH
+
+#if defined(BSP_SPI_FLASH_CS_PORT_A)
+#define W25Q128_CS_PIN    GET_PIN(A, BSP_SPI_FLASH_CS_PIN_NUM)
+#elif defined(BSP_SPI_FLASH_CS_PORT_B)
+#define W25Q128_CS_PIN    GET_PIN(B, BSP_SPI_FLASH_CS_PIN_NUM)
+#elif defined(BSP_SPI_FLASH_CS_PORT_C)
+#define W25Q128_CS_PIN    GET_PIN(C, BSP_SPI_FLASH_CS_PIN_NUM)
+#elif defined(BSP_SPI_FLASH_CS_PORT_D)
+#define W25Q128_CS_PIN    GET_PIN(D, BSP_SPI_FLASH_CS_PIN_NUM)
+#elif defined(BSP_SPI_FLASH_CS_PORT_E)
+#define W25Q128_CS_PIN    GET_PIN(E, BSP_SPI_FLASH_CS_PIN_NUM)
+#elif defined(BSP_SPI_FLASH_CS_PORT_F)
+#define W25Q128_CS_PIN    GET_PIN(F, BSP_SPI_FLASH_CS_PIN_NUM)
+#elif defined(BSP_SPI_FLASH_CS_PORT_G)
+#define W25Q128_CS_PIN    GET_PIN(G, BSP_SPI_FLASH_CS_PIN_NUM)
+#elif defined(BSP_SPI_FLASH_CS_PORT_H)
+#define W25Q128_CS_PIN    GET_PIN(H, BSP_SPI_FLASH_CS_PIN_NUM)
+#endif
+
+#define W25Q128_SPI_BUS_NAME      "spi1"
+#define W25Q128_SPI_DEVICE_NAME   "spi10"
+
+#endif
+
+#endif

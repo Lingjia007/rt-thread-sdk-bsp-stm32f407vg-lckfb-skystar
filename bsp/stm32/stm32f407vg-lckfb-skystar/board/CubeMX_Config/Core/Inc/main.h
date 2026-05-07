@@ -63,7 +63,8 @@ void Error_Handler(void);
 #define SD_CARD_DET_GPIO_Port GPIOD
 
 /* USER CODE BEGIN Private defines */
-
+#define SPI_FLASH_CS_Pin GPIO_PIN_4
+#define SPI_FLASH_CS_GPIO_Port GPIOA
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus
