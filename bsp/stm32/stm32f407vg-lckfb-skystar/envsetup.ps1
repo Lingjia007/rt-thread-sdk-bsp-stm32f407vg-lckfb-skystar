@@ -73,6 +73,8 @@ function Show-Commands {
     Write-Host ' - Upgrade packages' -ForegroundColor White
     Write-Host '   mdk5   ' -NoNewline -ForegroundColor Red
     Write-Host ' - Generate & Build MDK5 project' -ForegroundColor White
+    Write-Host '   dl     ' -NoNewline -ForegroundColor DarkGreen
+    Write-Host ' - Download to flash (Keil)' -ForegroundColor White
     Write-Host ''
 }
 
@@ -274,6 +276,94 @@ function global:pkgu {
 function global:mdk5 {
     Write-Host 'Generating MDK5 project and building...' -ForegroundColor Cyan
     Invoke-SconsColored -SconsArgs @('--target=mdk5')
+}
+
+function global:dl {
+    $projectFile = Join-Path $env:SDK_PRJ_TOP_DIR 'project.uvprojx'
+    $logFile = Join-Path $env:SDK_PRJ_TOP_DIR 'download.log'
+    $uv4exe = Join-Path $env:KeilPath 'UV4.exe'
+    
+    if (-not (Test-Path $projectFile)) {
+        Write-Host ' [ERROR] project.uvprojx not found!' -ForegroundColor Red
+        Write-Host ' Please run "mdk5" first to generate the project.' -ForegroundColor Yellow
+        return
+    }
+    
+    if (-not (Test-Path $uv4exe)) {
+        Write-Host " [ERROR] UV4.exe not found at: $uv4exe" -ForegroundColor Red
+        return
+    }
+    
+    if (Test-Path $logFile) { Remove-Item $logFile -Force }
+    
+    Write-Host ' Downloading to flash...' -ForegroundColor Cyan
+    Write-Host " Project: $projectFile" -ForegroundColor White
+    Write-Host ''
+    
+    $arguments = "-f `"$projectFile`" -j0 -o `"$logFile`""
+    
+    $process = Start-Process -FilePath $uv4exe `
+        -ArgumentList $arguments `
+        -NoNewWindow `
+        -PassThru
+    
+    $lastLineCount = 0
+    while (-not $process.HasExited) {
+        if (Test-Path $logFile) {
+            $lines = Get-Content $logFile -ErrorAction SilentlyContinue
+            if ($lines) {
+                $newLines = $lines | Select-Object -Skip $lastLineCount
+                foreach ($line in $newLines) {
+                    Write-ColoredKeilLog $line
+                }
+                $lastLineCount = $lines.Count
+            }
+        }
+        Start-Sleep -Milliseconds 200
+    }
+    
+    if (Test-Path $logFile) {
+        $lines = Get-Content $logFile -ErrorAction SilentlyContinue
+        if ($lines) {
+            $newLines = $lines | Select-Object -Skip $lastLineCount
+            foreach ($line in $newLines) {
+                Write-ColoredKeilLog $line
+            }
+        }
+    }
+    
+    Write-Host ''
+    $logContent = if (Test-Path $logFile) { Get-Content $logFile -Raw } else { '' }
+    
+    if ($logContent -match 'error|Error|ERROR' -and $logContent -notmatch '0 Error\(s\)') {
+        Write-Host ' [ERROR] Download failed! Check the log for details.' -ForegroundColor Red
+    }
+    elseif ($logContent -match 'Flash Load finished') {
+        Write-Host ' [OK] Download completed successfully!' -ForegroundColor Green
+    }
+    else {
+        Write-Host ' [WARN] Download status unknown. Check the log.' -ForegroundColor Yellow
+    }
+}
+
+function global:Write-ColoredKeilLog {
+    param([string]$Line)
+    
+    if ($Line -match 'error|Error|ERROR') {
+        Write-Host $Line -ForegroundColor Red
+    }
+    elseif ($Line -match 'warning|Warning|WARNING') {
+        Write-Host $Line -ForegroundColor Yellow
+    }
+    elseif ($Line -match 'successfully|Success|Complete|Programmed') {
+        Write-Host $Line -ForegroundColor Green
+    }
+    elseif ($Line -match 'Build Time|Erase|Programming|Verify') {
+        Write-Host $Line -ForegroundColor Cyan
+    }
+    else {
+        Write-Host $Line
+    }
 }
 
 Show-Logo
