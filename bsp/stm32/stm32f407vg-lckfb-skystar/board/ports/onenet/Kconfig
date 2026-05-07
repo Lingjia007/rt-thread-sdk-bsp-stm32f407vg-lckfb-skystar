@@ -11,6 +11,14 @@ if BSP_USING_ONENET
         bool "Enable OneNET sample"
         default n
 
+    config BSP_ONENET_AUTO_REGISTER_CALLBACKS
+        bool "Auto register property callbacks on startup"
+        default y
+        depends on BSP_ONENET_USING_SAMPLE
+        help
+            Automatically register property set/get/ota callbacks on system startup.
+            This enables the sample callbacks for BSP_LED, FIRMWARE_VERSION, RTC_TIME, TEXT.
+
     choice
         prompt "OneNET protocol"
         default BSP_ONENET_USING_MQTT
