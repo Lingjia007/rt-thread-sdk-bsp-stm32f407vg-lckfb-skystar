@@ -207,6 +207,14 @@
 #define RT_BLK_PARTITION_EFI
 /* end of Partition Types */
 #define RT_USING_PIN
+#define RT_USING_CHERRYUSB
+#define RT_CHERRYUSB_DEVICE
+#define RT_CHERRYUSB_DEVICE_SPEED_FS
+#define RT_CHERRYUSB_DEVICE_DWC2_ST
+#define RT_CHERRYUSB_DEVICE_MSC
+#define CONFIG_USBDEV_REQUEST_BUFFER_LEN 512
+#define CONFIG_USBDEV_MSC_MAX_BUFSIZE 512
+#define RT_CHERRYUSB_DEVICE_TEMPLATE_NONE
 /* end of Device Drivers */
 
 /* C/C++ and POSIX layer */
@@ -630,6 +638,12 @@
 #define BSP_SDCARD_MOUNT_THREAD_STACK 2048
 #define BSP_SDCARD_MOUNT_THREAD_PRIORITY 8
 /* end of SDCARD Driver */
+
+/* CherryUSB Driver */
+
+#define BSP_USING_USB_MSC
+#define BSP_USB_MSC_BLOCK_DEV_NAME "sd0"
+/* end of CherryUSB Driver */
 /* end of Onboard Peripheral Drivers */
 
 /* Board extended module Drivers */

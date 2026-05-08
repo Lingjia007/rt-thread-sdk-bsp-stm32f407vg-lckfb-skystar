@@ -553,6 +553,7 @@ menu "Onboard Peripheral Drivers"
     rsource "ports/esp8266-01s/Kconfig"
     rsource "ports/w25q128/Kconfig"
     rsource "ports/sdcard/Kconfig"
+    rsource "ports/usb/Kconfig"
 
 endmenu
 

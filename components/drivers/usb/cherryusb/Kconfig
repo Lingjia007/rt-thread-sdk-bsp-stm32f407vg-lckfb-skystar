@@ -1,4 +1,4 @@
-# Kconfig file for package CherryUSB
+#Kconfig file for package CherryUSB
 menuconfig RT_USING_CHERRYUSB
     bool "Using USB with CherryUSB"
     default n
@@ -23,6 +23,7 @@ if RT_USING_CHERRYUSB
 
         choice CHERRYUSB_DEVICE_IP
             prompt "Select usb device ip, and some ip need config in usb_config.h, please check"
+            default RT_CHERRYUSB_DEVICE_DWC2_ST if BSP_CHERRYUSB_DEVICE_DEFAULT_DWC2_ST
             default RT_CHERRYUSB_DEVICE_CUSTOM
             config RT_CHERRYUSB_DEVICE_CUSTOM
                 bool "CUSTOM (Implement it yourself)"
