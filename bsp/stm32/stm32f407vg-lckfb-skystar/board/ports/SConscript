@@ -4,6 +4,10 @@ from building import *
 cwd = GetCurrentDir()
 group = []
 
+src = Glob('*.c')
+if src:
+    group = group + DefineGroup('ports', src, depend=[''], CPPPATH=[cwd])
+
 list = os.listdir(cwd)
 for d in list:
     path = os.path.join(cwd, d)

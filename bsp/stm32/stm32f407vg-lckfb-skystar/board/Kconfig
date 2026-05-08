@@ -1,3 +1,5 @@
+rsource "ports/onenet/Kconfig"
+
 menu "Hardware Drivers Config"
 
 menu "On-chip Peripheral Drivers"
@@ -550,7 +552,7 @@ menu "Onboard Peripheral Drivers"
     rsource "ports/led/Kconfig"
     rsource "ports/esp8266-01s/Kconfig"
     rsource "ports/w25q128/Kconfig"
-    rsource "ports/onenet/Kconfig"
+    rsource "ports/sdcard/Kconfig"
 
 endmenu
 

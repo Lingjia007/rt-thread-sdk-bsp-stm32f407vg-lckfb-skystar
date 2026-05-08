@@ -336,9 +336,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls />
-              <Define>RT_USING_LIBC, __CLK_TCK=RT_TICK_PER_SECOND, LFS_CONFIG=lfs_config.h, __STDC_LIMIT_MACROS, USE_HAL_DRIVER, __RTTHREAD__, RT_USING_ARMLIBC, STM32F407xx</Define>
+              <Define>__CLK_TCK=RT_TICK_PER_SECOND, USE_HAL_DRIVER, RT_USING_LIBC, __STDC_LIMIT_MACROS, __RTTHREAD__, STM32F407xx, RT_USING_ARMLIBC, LFS_CONFIG=lfs_config.h</Define>
               <Undefine />
-              <IncludePath>..\..\..\include;..\..\..\components\net\utest;..\..\..\components\utilities\resource;board\ports\w25q128;..\..\..\components\net\netdev\include;..\..\..\components\finsh;..\..\..\components\drivers\include;..\..\..\components\drivers\spi;..\..\..\components\libc\posix\io\epoll;..\..\..\components\net\sal\impl;..\..\..\components\dfs\dfs_v1\filesystems\devfs;packages\at_device-latest\inc;..\..\..\components\net\sal\include\socket\sys_socket;packages\pahomqtt-latest\MQTTPacket\src;..\..\..\components\net\at\include;..\..\..\components\drivers\include;applications;packages\littlefs-latest;..\..\..\components\net\sal\include;packages\pahomqtt-latest\MQTTClient-RT;..\..\..\components\libc\posix\ipc;packages\cJSON-v1.7.17;..\..\..\components\libc\compilers\common\extension\fcntl\octal;..\..\..\components\drivers\include;..\..\..\libcpu\arm\cortex-m4;packages\at_device-latest\class\esp8266;..\..\..\components\net\at\at_socket;..\..\..\components\libc\posix\io\eventfd;board\CubeMX_Config\Core\Inc;board\ports\led;..\..\..\components\net\sal\include\dfs_net;..\..\..\components\drivers\smp_call;..\..\..\components\fal\inc;board\ports\esp8266-01s;..\..\..\components\dfs\dfs_v1\include;..\..\..\components\drivers\include;board\ports\onenet;..\..\..\components\drivers\include;..\..\..\components\libc\posix\io\poll;packages\stm32f4_hal_driver-latest\Inc\Legacy;packages\stm32f4_hal_driver-latest\Inc;..\..\..\components\drivers\include;board;..\..\..\components\net\sal\include\socket;..\..\..\components\drivers\include;board\ports\onenet\rtthread-package-onenet\ports;board\ports\onenet\rtthread-package-onenet\inc;packages\CMSIS-Core-latest\Include;..\..\..\components\drivers\phy;.;..\libraries\HAL_Drivers\drivers\config;packages\stm32f4_cmsis_driver-latest\Include;..\..\..\libcpu\arm\common;..\libraries\HAL_Drivers\drivers\drv_flash;..\libraries\HAL_Drivers;..\libraries\HAL_Drivers\drivers;..\..\..\components\libc\compilers\common\include;..\..\..\components\drivers\include;..\..\..\components\libc\compilers\common\extension;..\..\..\components\drivers\spi\sfud\inc</IncludePath>
+              <IncludePath>..\..\..\components\net\sal\include\socket;applications;packages\cJSON-v1.7.17;..\..\..\components\dfs\dfs_v1\filesystems\romfs;..\..\..\components\net\sal\include;..\..\..\components\libc\posix\io\eventfd;packages\stm32f4_hal_driver-latest\Inc\Legacy;..\..\..\components\drivers\smp_call;.;packages\at_device-latest\inc;board\ports\onenet\rtthread-package-onenet\inc;..\libraries\HAL_Drivers\drivers\config;..\..\..\components\net\netdev\include;board\ports\w25q128;..\..\..\components\libc\posix\io\poll;..\..\..\components\net\sal\include\dfs_net;..\..\..\components\dfs\dfs_v1\filesystems\devfs;..\..\..\libcpu\arm\cortex-m4;..\..\..\components\libc\compilers\common\extension\fcntl\octal;board\CubeMX_Config\Core\Inc;..\..\..\components\net\sal\include\socket\sys_socket;..\..\..\components\net\at\at_socket;..\..\..\components\drivers\include;..\..\..\components\libc\compilers\common\extension;packages\stm32f4_hal_driver-latest\Inc;board;..\..\..\include;..\..\..\components\finsh;..\..\..\components\drivers\include;packages\littlefs-latest;..\..\..\components\drivers\include;..\libraries\HAL_Drivers\drivers\drv_flash;board\ports\onenet\rtthread-package-onenet\ports;packages\at_device-latest\class\esp8266;..\..\..\components\drivers\include;..\..\..\libcpu\arm\common;board\ports;..\..\..\components\drivers\include;..\..\..\components\drivers\spi;..\..\..\components\drivers\include;..\..\..\components\libc\posix\ipc;board\ports\onenet;..\..\..\components\fal\inc;board\ports\esp8266-01s;..\..\..\components\drivers\include;..\..\..\components\drivers\include;packages\pahomqtt-latest\MQTTClient-RT;packages\stm32f4_cmsis_driver-latest\Include;..\..\..\components\net\utest;..\..\..\components\libc\posix\io\epoll;..\libraries\HAL_Drivers;packages\pahomqtt-latest\MQTTPacket\src;..\..\..\components\net\sal\impl;board\ports\sdcard;..\..\..\components\net\at\include;..\..\..\components\drivers\spi\sfud\inc;board\ports\led;packages\CMSIS-Core-latest\Include;..\..\..\components\dfs\dfs_v1\filesystems\elmfat;..\..\..\components\drivers\include;..\..\..\components\utilities\resource;..\..\..\components\dfs\dfs_v1\include;..\..\..\components\drivers\include;..\..\..\components\drivers\include;..\libraries\HAL_Drivers\drivers;..\..\..\components\drivers\include;..\..\..\components\drivers\phy;..\..\..\components\libc\compilers\common\include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -386,6 +386,13 @@
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>applications\main.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>mnt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>applications\mnt.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -508,6 +515,120 @@
         </Group>
         <Group>
           <GroupName>DeviceDrivers</GroupName>
+          <Files>
+            <File>
+              <FileName>blk.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\components\drivers\block\blk.c</FilePath>
+              <FileOption>
+                <FileArmAds>
+                  <Cads>
+                    <VariousControls>
+                      <MiscControls>  -std=c99</MiscControls>
+                      <Define>__RT_IPC_SOURCE__</Define>
+                      <Undefine> </Undefine>
+                      <IncludePath> </IncludePath>
+                    </VariousControls>
+                  </Cads>
+                </FileArmAds>
+              </FileOption>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>blk_dev.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\components\drivers\block\blk_dev.c</FilePath>
+              <FileOption>
+                <FileArmAds>
+                  <Cads>
+                    <VariousControls>
+                      <MiscControls>  -std=c99</MiscControls>
+                      <Define>__RT_IPC_SOURCE__</Define>
+                      <Undefine> </Undefine>
+                      <IncludePath> </IncludePath>
+                    </VariousControls>
+                  </Cads>
+                </FileArmAds>
+              </FileOption>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>blk_dfs.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\components\drivers\block\blk_dfs.c</FilePath>
+              <FileOption>
+                <FileArmAds>
+                  <Cads>
+                    <VariousControls>
+                      <MiscControls>  -std=c99</MiscControls>
+                      <Define>__RT_IPC_SOURCE__</Define>
+                      <Undefine> </Undefine>
+                      <IncludePath> </IncludePath>
+                    </VariousControls>
+                  </Cads>
+                </FileArmAds>
+              </FileOption>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>blk_partition.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\components\drivers\block\blk_partition.c</FilePath>
+              <FileOption>
+                <FileArmAds>
+                  <Cads>
+                    <VariousControls>
+                      <MiscControls>  -std=c99</MiscControls>
+                      <Define>__RT_IPC_SOURCE__</Define>
+                      <Undefine> </Undefine>
+                      <IncludePath> </IncludePath>
+                    </VariousControls>
+                  </Cads>
+                </FileArmAds>
+              </FileOption>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>dfs.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\components\drivers\block\partitions\dfs.c</FilePath>
+              <FileOption>
+                <FileArmAds>
+                  <Cads>
+                    <VariousControls>
+                      <MiscControls>  -std=c99</MiscControls>
+                      <Define>__RT_IPC_SOURCE__</Define>
+                      <Undefine> </Undefine>
+                      <IncludePath> </IncludePath>
+                    </VariousControls>
+                  </Cads>
+                </FileArmAds>
+              </FileOption>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>efi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\components\drivers\block\partitions\efi.c</FilePath>
+              <FileOption>
+                <FileArmAds>
+                  <Cads>
+                    <VariousControls>
+                      <MiscControls>  -std=c99</MiscControls>
+                      <Define>__RT_IPC_SOURCE__</Define>
+                      <Undefine> </Undefine>
+                      <IncludePath> </IncludePath>
+                    </VariousControls>
+                  </Cads>
+                </FileArmAds>
+              </FileOption>
+            </File>
+          </Files>
           <Files>
             <File>
               <FileName>device.c</FileName>
@@ -738,6 +859,101 @@
           </Files>
           <Files>
             <File>
+              <FileName>dev_block.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\components\drivers\sdio\dev_block.c</FilePath>
+              <FileOption>
+                <FileArmAds>
+                  <Cads>
+                    <VariousControls>
+                      <MiscControls>  -std=c99</MiscControls>
+                      <Define>__RT_IPC_SOURCE__</Define>
+                      <Undefine> </Undefine>
+                      <IncludePath> </IncludePath>
+                    </VariousControls>
+                  </Cads>
+                </FileArmAds>
+              </FileOption>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>dev_mmc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\components\drivers\sdio\dev_mmc.c</FilePath>
+              <FileOption>
+                <FileArmAds>
+                  <Cads>
+                    <VariousControls>
+                      <MiscControls>  -std=c99</MiscControls>
+                      <Define>__RT_IPC_SOURCE__</Define>
+                      <Undefine> </Undefine>
+                      <IncludePath> </IncludePath>
+                    </VariousControls>
+                  </Cads>
+                </FileArmAds>
+              </FileOption>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>dev_mmcsd_core.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\components\drivers\sdio\dev_mmcsd_core.c</FilePath>
+              <FileOption>
+                <FileArmAds>
+                  <Cads>
+                    <VariousControls>
+                      <MiscControls>  -std=c99</MiscControls>
+                      <Define>__RT_IPC_SOURCE__</Define>
+                      <Undefine> </Undefine>
+                      <IncludePath> </IncludePath>
+                    </VariousControls>
+                  </Cads>
+                </FileArmAds>
+              </FileOption>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>dev_sd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\components\drivers\sdio\dev_sd.c</FilePath>
+              <FileOption>
+                <FileArmAds>
+                  <Cads>
+                    <VariousControls>
+                      <MiscControls>  -std=c99</MiscControls>
+                      <Define>__RT_IPC_SOURCE__</Define>
+                      <Undefine> </Undefine>
+                      <IncludePath> </IncludePath>
+                    </VariousControls>
+                  </Cads>
+                </FileArmAds>
+              </FileOption>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>dev_sdio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\components\drivers\sdio\dev_sdio.c</FilePath>
+              <FileOption>
+                <FileArmAds>
+                  <Cads>
+                    <VariousControls>
+                      <MiscControls>  -std=c99</MiscControls>
+                      <Define>__RT_IPC_SOURCE__</Define>
+                      <Undefine> </Undefine>
+                      <IncludePath> </IncludePath>
+                    </VariousControls>
+                  </Cads>
+                </FileArmAds>
+              </FileOption>
+            </File>
+          </Files>
+          <Files>
+            <File>
               <FileName>dev_serial.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\components\drivers\serial\dev_serial.c</FilePath>
@@ -876,6 +1092,13 @@
           </Files>
           <Files>
             <File>
+              <FileName>drv_sdio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\libraries\HAL_Drivers\drivers\drv_sdio.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
               <FileName>drv_spi.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\libraries\HAL_Drivers\drivers\drv_spi.c</FilePath>
@@ -981,7 +1204,83 @@
           </Files>
           <Files>
             <File>
-              <FileName>dfs.c</FileName>
+              <FileName>dfs_elm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\components\dfs\dfs_v1\filesystems\elmfat\dfs_elm.c</FilePath>
+              <FileOption>
+                <FileArmAds>
+                  <Cads>
+                    <VariousControls>
+                      <MiscControls>  -std=c99</MiscControls>
+                      <Define> </Define>
+                      <Undefine> </Undefine>
+                      <IncludePath> </IncludePath>
+                    </VariousControls>
+                  </Cads>
+                </FileArmAds>
+              </FileOption>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>ff.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\components\dfs\dfs_v1\filesystems\elmfat\ff.c</FilePath>
+              <FileOption>
+                <FileArmAds>
+                  <Cads>
+                    <VariousControls>
+                      <MiscControls>  -std=c99</MiscControls>
+                      <Define> </Define>
+                      <Undefine> </Undefine>
+                      <IncludePath> </IncludePath>
+                    </VariousControls>
+                  </Cads>
+                </FileArmAds>
+              </FileOption>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>ffunicode.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\components\dfs\dfs_v1\filesystems\elmfat\ffunicode.c</FilePath>
+              <FileOption>
+                <FileArmAds>
+                  <Cads>
+                    <VariousControls>
+                      <MiscControls>  -std=c99</MiscControls>
+                      <Define> </Define>
+                      <Undefine> </Undefine>
+                      <IncludePath> </IncludePath>
+                    </VariousControls>
+                  </Cads>
+                </FileArmAds>
+              </FileOption>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>dfs_romfs.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\components\dfs\dfs_v1\filesystems\romfs\dfs_romfs.c</FilePath>
+              <FileOption>
+                <FileArmAds>
+                  <Cads>
+                    <VariousControls>
+                      <MiscControls>  -std=c99</MiscControls>
+                      <Define> </Define>
+                      <Undefine> </Undefine>
+                      <IncludePath> </IncludePath>
+                    </VariousControls>
+                  </Cads>
+                </FileArmAds>
+              </FileOption>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>src_dfs.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\components\dfs\dfs_v1\src\dfs.c</FilePath>
               <FileOption>
@@ -1643,6 +1942,16 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>ports</GroupName>
+          <Files>
+            <File>
+              <FileName>ls_ext.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>board\ports\ls_ext.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>SAL</GroupName>
           <Files>
             <File>
@@ -1691,6 +2000,16 @@
               <FileName>sal_socket.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\components\net\sal\src\sal_socket.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>sdcard</GroupName>
+          <Files>
+            <File>
+              <FileName>drv_sdcard.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>board\ports\sdcard\drv_sdcard.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1837,6 +2156,20 @@
               <FileName>stm32f4xx_hal_qspi.c</FileName>
               <FileType>1</FileType>
               <FilePath>packages\stm32f4_hal_driver-latest\Src\stm32f4xx_hal_qspi.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>stm32f4xx_ll_sdmmc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>packages\stm32f4_hal_driver-latest\Src\stm32f4xx_ll_sdmmc.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>stm32f4xx_hal_sd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>packages\stm32f4_hal_driver-latest\Src\stm32f4xx_hal_sd.c</FilePath>
             </File>
           </Files>
           <Files>

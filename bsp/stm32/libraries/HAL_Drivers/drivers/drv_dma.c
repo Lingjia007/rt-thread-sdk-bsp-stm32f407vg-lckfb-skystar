@@ -271,8 +271,15 @@ rt_err_t stm32_dma_init(DMA_HandleTypeDef *dma_handle,
 
     if (HAL_DMA_DeInit(dma_handle) != HAL_OK)
     {
-        LOG_E("dma deinit failed, dma=%p, irq=%d", dma_handle->Instance, dma_config->dma_irq);
-        return -RT_ERROR;
+        if (HAL_DMA_Abort(dma_handle) != HAL_OK)
+        {
+            LOG_W("dma abort failed, dma=%p, irq=%d", dma_handle->Instance, dma_config->dma_irq);
+        }
+        if (HAL_DMA_DeInit(dma_handle) != HAL_OK)
+        {
+            LOG_E("dma deinit failed, dma=%p, irq=%d", dma_handle->Instance, dma_config->dma_irq);
+            return -RT_ERROR;
+        }
     }
 
     if (HAL_DMA_Init(dma_handle) != HAL_OK)

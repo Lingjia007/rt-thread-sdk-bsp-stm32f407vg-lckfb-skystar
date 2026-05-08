@@ -51,25 +51,86 @@ config BSP_SPI_FLASH_USING_FAL
     select FAL_USING_SFUD_PORT
     select FAL_PART_HAS_TABLE_CFG
     default n
+    help
+        Enable Flash Abstraction Layer for partition management.
 
 if BSP_SPI_FLASH_USING_FAL
 
 config BSP_SPI_FLASH_PARTITION_NAME
     string "W25Q128 partition name"
     default "filesystem"
+    help
+        The partition name for W25Q128 in FAL partition table.
+
+choice
+    prompt "Select filesystem type"
+    default BSP_SPI_FLASH_USING_LITTLEFS
+    help
+        Select the filesystem type to use on W25Q128.
 
 config BSP_SPI_FLASH_USING_LITTLEFS
-    bool "Enable LittleFS filesystem on W25Q128"
+    bool "LittleFS"
     select RT_USING_DFS
     select RT_USING_MTD_NOR
     select PKG_USING_LITTLEFS
-    default n
+    help
+        LittleFS is a lightweight filesystem designed for embedded systems.
+        It provides wear leveling and power-loss resilience.
 
-if BSP_SPI_FLASH_USING_LITTLEFS
+config BSP_SPI_FLASH_USING_FATFS
+    bool "FATFS (ELM FatFs)"
+    select RT_USING_DFS
+    select RT_USING_MTD_NOR
+    select RT_USING_DFS_ELMFAT
+    help
+        FAT filesystem with good compatibility.
+        Note: FAT may cause more wear on SPI flash compared to LittleFS.
+endchoice
+
+config BSP_SPI_FLASH_AUTO_MOUNT
+    bool "Auto mount filesystem on startup"
+    default y
+    help
+        Automatically mount the filesystem when system starts.
+        If disabled, you need to mount manually using dfs_mount().
+
+if BSP_SPI_FLASH_AUTO_MOUNT
 
 config BSP_SPI_FLASH_MOUNT_POINT
     string "W25Q128 mount point"
-    default "/"
+    default "/flash"
+    help
+        The directory where the W25Q128 filesystem will be mounted.
+        Common choices: /flash, /data, /spiflash
+
+config BSP_SPI_FLASH_MOUNT_THREAD_STACK
+    int "Mount thread stack size"
+    default 2048
+    range 1024 4096
+    help
+        Stack size for the filesystem mount thread.
+
+config BSP_SPI_FLASH_MOUNT_THREAD_PRIORITY
+    int "Mount thread priority"
+    default 8
+    range 1 32
+    help
+        Priority for the filesystem mount thread.
+        Lower number means higher priority.
+
+config BSP_SPI_FLASH_FORMAT_IF_FAIL
+    bool "Format filesystem if mount fails"
+    default y
+    help
+        Automatically format the filesystem if mounting fails.
+        Warning: This will erase all data on the flash.
+
+config BSP_SPI_FLASH_MOUNT_RETRY
+    int "Mount retry count"
+    default 3
+    range 1 10
+    help
+        Number of retries when mounting fails.
 
 endif
 

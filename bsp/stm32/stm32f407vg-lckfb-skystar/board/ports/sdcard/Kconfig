@@ -1,0 +1,110 @@
+menu "SDCARD Driver"
+
+config BSP_USING_SDCARD
+    bool "Enable SDCARD (SDIO)"
+    default n
+    select BSP_USING_SDIO
+    select RT_USING_DFS_ELMFAT
+
+if BSP_USING_SDCARD
+
+config BSP_SDCARD_AUTO_MOUNT
+    bool "Auto mount SD card on startup"
+    default y
+    help
+        Automatically mount SD card when detected on system startup.
+
+if BSP_SDCARD_AUTO_MOUNT
+
+config BSP_SDCARD_MOUNT_POINT
+    string "SD card mount point"
+    default "/sdcard"
+    help
+        The directory where the SD card will be mounted.
+        Common choices: /sdcard, /mnt, /
+
+config BSP_SDCARD_FORMAT_IF_FAIL
+    bool "Format SD card if mount fails"
+    default n
+    help
+        Automatically format the SD card if mounting fails.
+        Warning: This will erase all data on the SD card.
+        Use with caution!
+
+config BSP_SDCARD_MOUNT_RETRY
+    int "Mount retry count"
+    default 3
+    range 1 10
+    help
+        Number of retries when mounting fails.
+
+endif
+
+config BSP_SDCARD_HOT_PLUG
+    bool "Enable hot plug detection"
+    default y
+    help
+        Enable SD card hot plug detection thread.
+        The SD card will be mounted when inserted and unmounted when removed.
+
+if BSP_SDCARD_HOT_PLUG
+
+choice
+    prompt "SD card detect pin port"
+    default BSP_SDCARD_DET_PORT_D
+
+config BSP_SDCARD_DET_PORT_A
+    bool "GPIOA"
+
+config BSP_SDCARD_DET_PORT_B
+    bool "GPIOB"
+
+config BSP_SDCARD_DET_PORT_C
+    bool "GPIOC"
+
+config BSP_SDCARD_DET_PORT_D
+    bool "GPIOD"
+
+config BSP_SDCARD_DET_PORT_E
+    bool "GPIOE"
+
+config BSP_SDCARD_DET_PORT_F
+    bool "GPIOF"
+
+config BSP_SDCARD_DET_PORT_G
+    bool "GPIOG"
+
+config BSP_SDCARD_DET_PORT_H
+    bool "GPIOH"
+endchoice
+
+config BSP_SDCARD_DET_PIN_NUM
+    int "SD card detect pin number (0-15)"
+    default 3
+    range 0 15
+    help
+        The pin number for SD card detection.
+        Default is PD3 (SD_CARD_DET_Pin from CubeMX config).
+
+config BSP_SDCARD_DET_ACTIVE_LOW
+    bool "Detect pin active low"
+    default y
+    help
+        SD card is detected when the detect pin is LOW.
+        If disabled, SD card is detected when pin is HIGH.
+
+config BSP_SDCARD_MOUNT_THREAD_STACK
+    int "Mount thread stack size"
+    default 2048
+    range 1024 4096
+
+config BSP_SDCARD_MOUNT_THREAD_PRIORITY
+    int "Mount thread priority"
+    default 8
+    range 1 32
+
+endif
+
+endif
+
+endmenu

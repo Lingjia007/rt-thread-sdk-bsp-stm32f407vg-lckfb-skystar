@@ -64,7 +64,7 @@
 
 /* end of rt_strnlen options */
 /* end of klibc options */
-#define RT_NAME_MAX 12
+#define RT_NAME_MAX 32
 #define RT_CPUS_NR 1
 #define RT_ALIGN_SIZE 8
 #define RT_THREAD_PRIORITY_32
@@ -148,7 +148,24 @@
 #define RT_USING_DFS_V1
 #define DFS_FILESYSTEMS_MAX 4
 #define DFS_FILESYSTEM_TYPES_MAX 4
+#define RT_USING_DFS_ELMFAT
+
+/* elm-chan's FatFs, Generic FAT Filesystem Module */
+
+#define RT_DFS_ELM_CODE_PAGE 437
+#define RT_DFS_ELM_WORD_ACCESS
+#define RT_DFS_ELM_USE_LFN_3
+#define RT_DFS_ELM_USE_LFN 3
+#define RT_DFS_ELM_LFN_UNICODE_0
+#define RT_DFS_ELM_LFN_UNICODE 0
+#define RT_DFS_ELM_MAX_LFN 255
+#define RT_DFS_ELM_DRIVES 2
+#define RT_DFS_ELM_MAX_SECTOR_SIZE 512
+#define RT_DFS_ELM_REENTRANT
+#define RT_DFS_ELM_MUTEX_TIMEOUT 3000
+/* end of elm-chan's FatFs, Generic FAT Filesystem Module */
 #define RT_USING_DFS_DEVFS
+#define RT_USING_DFS_ROMFS
 /* end of DFS: device virtual file system */
 #define RT_USING_FAL
 #define FAL_USING_DEBUG
@@ -170,12 +187,25 @@
 #define RT_SERIAL_USING_DMA
 #define RT_SERIAL_RB_BUFSZ 1024
 #define RT_USING_MTD_NOR
+#define RT_USING_SDIO
+#define RT_SDIO_STACK_SIZE 2048
+#define RT_SDIO_THREAD_PRIORITY 12
+#define RT_MMCSD_STACK_SIZE 2048
+#define RT_MMCSD_THREAD_PRIORITY 15
+#define RT_MMCSD_MAX_PARTITION 16
 #define RT_USING_SPI
 #define RT_USING_SPI_ISR
 #define RT_USING_SFUD
 #define RT_SFUD_USING_SFDP
 #define RT_SFUD_USING_FLASH_INFO_TABLE
 #define RT_SFUD_SPI_MAX_HZ 50000000
+#define RT_USING_BLK
+
+/* Partition Types */
+
+#define RT_BLK_PARTITION_DFS
+#define RT_BLK_PARTITION_EFI
+/* end of Partition Types */
 #define RT_USING_PIN
 /* end of Device Drivers */
 
@@ -380,6 +410,7 @@
 #define PKG_USING_STM32F4_HAL_DRIVER_LATEST_VERSION
 #define PKG_USING_STM32F4_CMSIS_DRIVER
 #define PKG_USING_STM32F4_CMSIS_DRIVER_LATEST_VERSION
+#define SDIO_MAX_FREQ 24000000
 /* end of STM32 HAL & SDK Drivers */
 
 /* Infineon HAL Packages */
@@ -503,53 +534,6 @@
 #define SOC_FAMILY_STM32
 #define SOC_SERIES_STM32F4
 
-/* Hardware Drivers Config */
-
-/* On-chip Peripheral Drivers */
-
-#define BSP_USING_GPIO
-#define BSP_USING_UART
-#define BSP_STM32_UART_V1_TX_TIMEOUT 2000
-#define BSP_USING_UART1
-#define BSP_USING_UART4
-#define BSP_UART4_RX_BUFSIZE 256
-#define BSP_UART4_TX_BUFSIZE 0
-#define BSP_USING_ON_CHIP_FLASH
-#define BSP_USING_SPI
-#define BSP_USING_SPI1
-/* end of On-chip Peripheral Drivers */
-
-/* Onboard Peripheral Drivers */
-
-/* LED Driver */
-
-#define BSP_USING_LED
-#define BSP_LED_BOOT_MODE_PWM
-#define BSP_LED_BOOT_BREATHE
-#define BSP_LED_BLINK_INTERVAL 500
-#define BSP_LED_BREATHE_PERIOD 3600
-#define BSP_LED_SW_PWM_PERIOD 20
-/* end of LED Driver */
-
-/* ESP8266 Driver */
-
-#define BSP_USING_ESP8266
-
-/* May adjust RT_SERIAL_RB_BUFSZ up to 512 if using the Serial V1 device driver */
-
-/* end of ESP8266 Driver */
-
-/* W25Q128 SPI Flash Driver */
-
-#define BSP_USING_SPI_FLASH
-#define BSP_SPI_FLASH_CS_PORT_A
-#define BSP_SPI_FLASH_CS_PIN_NUM 4
-#define BSP_SPI_FLASH_USING_FAL
-#define BSP_SPI_FLASH_PARTITION_NAME "spi-flash"
-#define BSP_SPI_FLASH_USING_LITTLEFS
-#define BSP_SPI_FLASH_MOUNT_POINT "/"
-/* end of W25Q128 SPI Flash Driver */
-
 /* Board Support Packages */
 
 #define BSP_USING_ONENET
@@ -580,6 +564,72 @@
 #define BSP_ONENET_INFO_DEVID "STM32F407VGT6_SKYSTAR"
 #define BSP_ONENET_INFO_PROID "OmZ40ZapAD"
 /* end of Board Support Packages */
+
+/* Hardware Drivers Config */
+
+/* On-chip Peripheral Drivers */
+
+#define BSP_USING_GPIO
+#define BSP_USING_UART
+#define BSP_STM32_UART_V1_TX_TIMEOUT 2000
+#define BSP_USING_UART1
+#define BSP_USING_UART4
+#define BSP_UART4_RX_BUFSIZE 256
+#define BSP_UART4_TX_BUFSIZE 0
+#define BSP_USING_ON_CHIP_FLASH
+#define BSP_USING_SPI
+#define BSP_USING_SPI1
+#define BSP_USING_SDIO
+/* end of On-chip Peripheral Drivers */
+
+/* Onboard Peripheral Drivers */
+
+/* LED Driver */
+
+#define BSP_USING_LED
+#define BSP_LED_BOOT_MODE_PWM
+#define BSP_LED_BOOT_BREATHE
+#define BSP_LED_BLINK_INTERVAL 500
+#define BSP_LED_BREATHE_PERIOD 3600
+#define BSP_LED_SW_PWM_PERIOD 20
+/* end of LED Driver */
+
+/* ESP8266 Driver */
+
+#define BSP_USING_ESP8266
+
+/* May adjust RT_SERIAL_RB_BUFSZ up to 512 if using the Serial V1 device driver */
+
+/* end of ESP8266 Driver */
+
+/* W25Q128 SPI Flash Driver */
+
+#define BSP_USING_SPI_FLASH
+#define BSP_SPI_FLASH_CS_PORT_A
+#define BSP_SPI_FLASH_CS_PIN_NUM 4
+#define BSP_SPI_FLASH_USING_FAL
+#define BSP_SPI_FLASH_PARTITION_NAME "spi-flash"
+#define BSP_SPI_FLASH_USING_LITTLEFS
+#define BSP_SPI_FLASH_AUTO_MOUNT
+#define BSP_SPI_FLASH_MOUNT_POINT "/spi-flash"
+#define BSP_SPI_FLASH_MOUNT_THREAD_STACK 2048
+#define BSP_SPI_FLASH_MOUNT_THREAD_PRIORITY 8
+#define BSP_SPI_FLASH_MOUNT_RETRY 3
+/* end of W25Q128 SPI Flash Driver */
+
+/* SDCARD Driver */
+
+#define BSP_USING_SDCARD
+#define BSP_SDCARD_AUTO_MOUNT
+#define BSP_SDCARD_MOUNT_POINT "/sdcard"
+#define BSP_SDCARD_MOUNT_RETRY 3
+#define BSP_SDCARD_HOT_PLUG
+#define BSP_SDCARD_DET_PORT_D
+#define BSP_SDCARD_DET_PIN_NUM 3
+#define BSP_SDCARD_DET_ACTIVE_LOW
+#define BSP_SDCARD_MOUNT_THREAD_STACK 2048
+#define BSP_SDCARD_MOUNT_THREAD_PRIORITY 8
+/* end of SDCARD Driver */
 /* end of Onboard Peripheral Drivers */
 
 /* Board extended module Drivers */
