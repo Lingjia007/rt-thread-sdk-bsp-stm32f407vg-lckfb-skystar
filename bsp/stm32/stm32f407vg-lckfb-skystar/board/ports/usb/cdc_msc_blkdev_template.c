@@ -75,10 +75,30 @@ static const char *string_descriptor_callback(uint8_t speed, uint8_t index)
     return string_descriptors[index];
 }
 
+static const uint8_t msosv1_string[] = {
+    USB_MSOSV1_STRING_DESCRIPTOR_INIT(0x01)
+};
+
+static const uint8_t msosv1_compat_id[] = {
+    USB_MSOSV1_COMP_ID_HEADER_DESCRIPTOR_INIT(0x01),
+    0x00, 0x01,
+    'C', 'D', 'C', 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+};
+
+static struct usb_msosv1_descriptor msosv1_desc = {
+    .string = msosv1_string,
+    .vendor_code = 0x01,
+    .compat_id = msosv1_compat_id,
+    .comp_id_property = NULL,
+};
+
 const struct usb_descriptor cdc_msc_blkdev_descriptor = {
     .device_descriptor_callback = device_descriptor_callback,
     .config_descriptor_callback = config_descriptor_callback,
-    .string_descriptor_callback = string_descriptor_callback
+    .string_descriptor_callback = string_descriptor_callback,
+    .msosv1_descriptor = &msosv1_desc
 };
 
 USB_NOCACHE_RAM_SECTION USB_MEM_ALIGNX uint8_t cdc_read_buffer[CDC_MAX_MPS];

@@ -2,7 +2,7 @@ menu "CherryUSB Driver"
 
 config BSP_CHERRYUSB_DEVICE_DEFAULT_DWC2_ST
     bool
-    default y if BSP_USING_USB_CDC || BSP_USING_USB_MSC || BSP_USING_USB_CDC_MSC
+    default y if BSP_USING_USB_CDC || BSP_USING_USB_MSC || BSP_USING_USB_CDC_MSC || BSP_USING_USB_HID || BSP_USING_USB_CDC_HID || BSP_USING_USB_MSC_HID
 
 choice
     prompt "USB Device Mode"
@@ -20,6 +20,17 @@ config BSP_USING_USB_CDC
     help
         Enable CherryUSB CDC ACM device mode only. A virtual serial port
         (COM) will be available for communication.
+
+config BSP_USING_USB_HID
+    bool "HID only (Custom HID Device)"
+    depends on !BSP_USING_USBD
+    select RT_USING_CHERRYUSB
+    select RT_CHERRYUSB_DEVICE
+    select RT_CHERRYUSB_DEVICE_HID
+    help
+        Enable CherryUSB HID device mode only. A custom HID device with
+        IN+OUT interrupt endpoints will be available for generic data
+        transfer. Suitable for custom communication protocols.
 
 config BSP_USING_USB_MSC
     bool "MSC only (SD card as U-disk)"
@@ -45,16 +56,34 @@ config BSP_USING_USB_CDC_MSC
         as a removable disk, and a virtual serial port (COM) will also be
         available for communication.
 
-        This option will automatically configure:
-          - USB device speed: FS
-          - USB device IP: dwc2_st
-          - USB device template: none (using BSP custom template)
+config BSP_USING_USB_CDC_HID
+    bool "CDC+HID (Virtual Serial Port + Custom HID)"
+    depends on !BSP_USING_USBD
+    select RT_USING_CHERRYUSB
+    select RT_CHERRYUSB_DEVICE
+    select RT_CHERRYUSB_DEVICE_CDC_ACM
+    select RT_CHERRYUSB_DEVICE_HID
+    help
+        Enable CherryUSB CDC+HID composite device. A virtual serial port
+        (COM) and a custom HID device will be available simultaneously.
+        The HID device can be used for custom data exchange with the host.
 
-        Note: This conflicts with the legacy USB device stack (BSP_USING_USBD).
+config BSP_USING_USB_MSC_HID
+    bool "MSC+HID (SD card as U-disk + Custom HID)"
+    depends on !BSP_USING_USBD
+    select RT_USING_CHERRYUSB
+    select RT_CHERRYUSB_DEVICE
+    select RT_CHERRYUSB_DEVICE_MSC
+    select RT_CHERRYUSB_DEVICE_HID
+    select BSP_USING_SDIO
+    help
+        Enable CherryUSB MSC+HID composite device. The SD card will appear
+        as a removable disk, and a custom HID device will also be available
+        for custom data exchange with the host.
 
 endchoice
 
-if BSP_USING_USB_MSC || BSP_USING_USB_CDC_MSC
+if BSP_USING_USB_MSC || BSP_USING_USB_CDC_MSC || BSP_USING_USB_MSC_HID
 
 config BSP_USB_MSC_BLOCK_DEV_NAME
     string "Block device name for USB MSC"
