@@ -1,28 +1,34 @@
 #include <rtconfig.h>
-#ifdef BSP_USING_USB_MSC
+#ifdef BSP_USING_USB_CDC_MSC
 #include "usbd_core.h"
+#include "usbd_cdc_acm.h"
 #include "usbd_msc.h"
 #include "usb_config.h"
 
-#define MSC_IN_EP  0x81
-#define MSC_OUT_EP 0x02
+#define CDC_INT_EP 0x81
+#define CDC_OUT_EP 0x02
+#define CDC_IN_EP  0x82
+#define MSC_OUT_EP 0x03
+#define MSC_IN_EP  0x83
 
 #ifndef USBD_VID
 #define USBD_VID           0x0483
 #endif
 
 #ifndef USBD_PID
-#define USBD_PID           0x5720
+#define USBD_PID           0x5741
 #endif
 
 #define USBD_MAX_POWER     100
 #define USBD_LANGID_STRING 1033
 
-#define USB_CONFIG_SIZE (9 + MSC_DESCRIPTOR_LEN)
+#define USB_CONFIG_SIZE (9 + CDC_ACM_DESCRIPTOR_LEN + MSC_DESCRIPTOR_LEN)
 
 #ifdef CONFIG_USB_HS
+#define CDC_MAX_MPS 512
 #define MSC_MAX_MPS 512
 #else
+#define CDC_MAX_MPS 64
 #define MSC_MAX_MPS 64
 #endif
 
@@ -31,16 +37,17 @@
 #endif
 
 #ifndef CONFIG_USBDEV_MSC_PRODUCT_STRING
-#define CONFIG_USBDEV_MSC_PRODUCT_STRING "SKYSTAR SD Card"
+#define CONFIG_USBDEV_MSC_PRODUCT_STRING "SKYSTAR Composite Device"
 #endif
 
 static const uint8_t device_descriptor[] = {
-    USB_DEVICE_DESCRIPTOR_INIT(USB_2_0, 0x00, 0x00, 0x00, USBD_VID, USBD_PID, 0x0200, 0x01)
+    USB_DEVICE_DESCRIPTOR_INIT(USB_2_0, 0xEF, 0x02, 0x01, USBD_VID, USBD_PID, 0x0200, 0x01)
 };
 
 static const uint8_t config_descriptor[] = {
-    USB_CONFIG_DESCRIPTOR_INIT(USB_CONFIG_SIZE, 0x01, 0x01, USB_CONFIG_BUS_POWERED, USBD_MAX_POWER),
-    MSC_DESCRIPTOR_INIT(0x00, MSC_OUT_EP, MSC_IN_EP, MSC_MAX_MPS, 0x02)
+    USB_CONFIG_DESCRIPTOR_INIT(USB_CONFIG_SIZE, 0x03, 0x01, USB_CONFIG_BUS_POWERED, USBD_MAX_POWER),
+    CDC_ACM_DESCRIPTOR_INIT(0x00, CDC_INT_EP, CDC_OUT_EP, CDC_IN_EP, CDC_MAX_MPS, 0x02),
+    MSC_DESCRIPTOR_INIT(0x02, MSC_OUT_EP, MSC_IN_EP, MSC_MAX_MPS, 0x00)
 };
 
 static const char *string_descriptors[] = {
@@ -68,17 +75,22 @@ static const char *string_descriptor_callback(uint8_t speed, uint8_t index)
     return string_descriptors[index];
 }
 
-const struct usb_descriptor msc_blkdev_descriptor = {
+const struct usb_descriptor cdc_msc_blkdev_descriptor = {
     .device_descriptor_callback = device_descriptor_callback,
     .config_descriptor_callback = config_descriptor_callback,
     .string_descriptor_callback = string_descriptor_callback
 };
 
+USB_NOCACHE_RAM_SECTION USB_MEM_ALIGNX uint8_t cdc_read_buffer[CDC_MAX_MPS];
+USB_NOCACHE_RAM_SECTION USB_MEM_ALIGNX uint8_t cdc_write_buffer[CDC_MAX_MPS];
+
+static volatile bool ep_tx_busy_flag = false;
+static volatile bool dtr_enable = false;
+
 static void usbd_event_handler(uint8_t busid, uint8_t event)
 {
     switch (event) {
         case USBD_EVENT_RESET:
-            rt_kprintf("[USB] Reset\n");
             break;
         case USBD_EVENT_CONNECTED:
             rt_kprintf("[USB] Connected\n");
@@ -91,7 +103,9 @@ static void usbd_event_handler(uint8_t busid, uint8_t event)
         case USBD_EVENT_SUSPEND:
             break;
         case USBD_EVENT_CONFIGURED:
-            rt_kprintf("[USB] Configured\n");
+            ep_tx_busy_flag = false;
+            usbd_ep_start_read(busid, CDC_OUT_EP, cdc_read_buffer, CDC_MAX_MPS);
+            rt_kprintf("[USB] Configured (CDC+MSC)\n");
             break;
         case USBD_EVENT_SET_REMOTE_WAKEUP:
             break;
@@ -101,6 +115,40 @@ static void usbd_event_handler(uint8_t busid, uint8_t event)
             break;
     }
 }
+
+void usbd_cdc_acm_bulk_out(uint8_t busid, uint8_t ep, uint32_t nbytes)
+{
+    usbd_ep_start_write(busid, CDC_IN_EP, cdc_read_buffer, nbytes);
+}
+
+void usbd_cdc_acm_bulk_in(uint8_t busid, uint8_t ep, uint32_t nbytes)
+{
+    if ((nbytes % usbd_get_ep_mps(busid, ep)) == 0 && nbytes) {
+        usbd_ep_start_write(busid, CDC_IN_EP, NULL, 0);
+    } else {
+        ep_tx_busy_flag = false;
+        usbd_ep_start_read(busid, CDC_OUT_EP, cdc_read_buffer, CDC_MAX_MPS);
+    }
+}
+
+void usbd_cdc_acm_set_dtr(uint8_t busid, uint8_t intf, bool dtr)
+{
+    dtr_enable = dtr;
+}
+
+void usbd_cdc_acm_set_rts(uint8_t busid, uint8_t intf, bool rts)
+{
+}
+
+static struct usbd_endpoint cdc_out_ep = {
+    .ep_addr = CDC_OUT_EP,
+    .ep_cb = usbd_cdc_acm_bulk_out
+};
+
+static struct usbd_endpoint cdc_in_ep = {
+    .ep_addr = CDC_IN_EP,
+    .ep_cb = usbd_cdc_acm_bulk_in
+};
 
 #include <rtdevice.h>
 
@@ -140,11 +188,13 @@ int usbd_msc_sector_write(uint8_t busid, uint8_t lun, uint32_t sector, uint8_t *
 }
 
 static struct usbd_interface intf0;
+static struct usbd_interface intf1;
+static struct usbd_interface intf2;
 
-void msc_blkdev_init(uint8_t busid, uintptr_t reg_base)
+void cdc_msc_blkdev_init(uint8_t busid, uintptr_t reg_base)
 {
-    rt_kprintf("[USB] Initializing MSC device...\n");
-    
+    rt_kprintf("[USB] Initializing CDC+MSC composite device...\n");
+
     blk_dev = rt_device_find(CONFIG_USBDEV_MSC_BLOCK_DEV_NAME);
     if (blk_dev == RT_NULL) {
         rt_kprintf("[USB] Block device '%s' not found!\n", CONFIG_USBDEV_MSC_BLOCK_DEV_NAME);
@@ -158,10 +208,14 @@ void msc_blkdev_init(uint8_t busid, uintptr_t reg_base)
 
     rt_kprintf("[USB] Block device '%s' opened successfully\n", CONFIG_USBDEV_MSC_BLOCK_DEV_NAME);
 
-    usbd_desc_register(busid, &msc_blkdev_descriptor);
-    usbd_add_interface(busid, usbd_msc_init_intf(busid, &intf0, MSC_OUT_EP, MSC_IN_EP));
+    usbd_desc_register(busid, &cdc_msc_blkdev_descriptor);
+    usbd_add_interface(busid, usbd_cdc_acm_init_intf(busid, &intf0));
+    usbd_add_interface(busid, usbd_cdc_acm_init_intf(busid, &intf1));
+    usbd_add_endpoint(busid, &cdc_out_ep);
+    usbd_add_endpoint(busid, &cdc_in_ep);
+    usbd_add_interface(busid, usbd_msc_init_intf(busid, &intf2, MSC_OUT_EP, MSC_IN_EP));
     usbd_initialize(busid, reg_base, usbd_event_handler);
-    
-    rt_kprintf("[USB] MSC device initialized, VID=0x%04X, PID=0x%04X\n", USBD_VID, USBD_PID);
+
+    rt_kprintf("[USB] CDC+MSC composite device initialized, VID=0x%04X, PID=0x%04X\n", USBD_VID, USBD_PID);
 }
 #endif

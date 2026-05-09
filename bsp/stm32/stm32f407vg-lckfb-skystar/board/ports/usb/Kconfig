@@ -1,36 +1,60 @@
 menu "CherryUSB Driver"
 
+config BSP_CHERRYUSB_DEVICE_DEFAULT_DWC2_ST
+    bool
+    default y if BSP_USING_USB_CDC || BSP_USING_USB_MSC || BSP_USING_USB_CDC_MSC
+
+choice
+    prompt "USB Device Mode"
+    default BSP_USB_DEVICE_NONE
+
+config BSP_USB_DEVICE_NONE
+    bool "Disabled"
+
+config BSP_USING_USB_CDC
+    bool "CDC only (Virtual Serial Port)"
+    depends on !BSP_USING_USBD
+    select RT_USING_CHERRYUSB
+    select RT_CHERRYUSB_DEVICE
+    select RT_CHERRYUSB_DEVICE_CDC_ACM
+    help
+        Enable CherryUSB CDC ACM device mode only. A virtual serial port
+        (COM) will be available for communication.
+
 config BSP_USING_USB_MSC
-    bool "Enable USB MSC (SD card as U-disk)"
-    default n
+    bool "MSC only (SD card as U-disk)"
     depends on !BSP_USING_USBD
     select RT_USING_CHERRYUSB
     select RT_CHERRYUSB_DEVICE
     select RT_CHERRYUSB_DEVICE_MSC
     select BSP_USING_SDIO
     help
-        Enable CherryUSB MSC device mode, using SD card as a USB mass storage
-        device (U-disk). When enabled, the SD card will appear as a removable
-        disk on the connected computer via USB OTG FS port.
+        Enable CherryUSB MSC device mode only. The SD card will appear
+        as a removable disk on the connected computer.
 
-        IMPORTANT: After enabling this option, you MUST configure the following
-        in "RT-Thread online packages" -> "system packages" -> "CherryUSB":
+config BSP_USING_USB_CDC_MSC
+    bool "CDC+MSC (Virtual Serial Port + SD card as U-disk)"
+    depends on !BSP_USING_USBD
+    select RT_USING_CHERRYUSB
+    select RT_CHERRYUSB_DEVICE
+    select RT_CHERRYUSB_DEVICE_CDC_ACM
+    select RT_CHERRYUSB_DEVICE_MSC
+    select BSP_USING_SDIO
+    help
+        Enable CherryUSB CDC+MSC composite device. The SD card will appear
+        as a removable disk, and a virtual serial port (COM) will also be
+        available for communication.
 
-          1. Select usb device speed: FS
-          2. Select usb device ip: dwc2_st
-          3. Select usb device template: none (IMPORTANT!)
-
-        You MUST select "none" for the template because this BSP provides its
-        own MSC template with proper VID/PID for Windows recognition.
+        This option will automatically configure:
+          - USB device speed: FS
+          - USB device IP: dwc2_st
+          - USB device template: none (using BSP custom template)
 
         Note: This conflicts with the legacy USB device stack (BSP_USING_USBD).
-        If you need USB MSC, disable BSP_USING_USBD first.
 
-        Warning: When both USB MSC and local DFS mount are active on the same
-        SD card, data corruption may occur. Consider disabling
-        BSP_SDCARD_AUTO_MOUNT if you primarily use the SD card as a U-disk.
+endchoice
 
-if BSP_USING_USB_MSC
+if BSP_USING_USB_MSC || BSP_USING_USB_CDC_MSC
 
 config BSP_USB_MSC_BLOCK_DEV_NAME
     string "Block device name for USB MSC"
