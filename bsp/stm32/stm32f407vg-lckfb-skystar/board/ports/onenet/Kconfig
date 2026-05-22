@@ -141,6 +141,45 @@ if BSP_USING_ONENET
         help
             Enable automatic registration device functions, don't need to register on the web page
 
+    config BSP_ONENET_USING_OTA
+        bool "Enable OneNET OTA firmware upgrade"
+        default n
+        depends on BSP_ONENET_USING_MQTT
+        select PKG_USING_WEBCLIENT
+        help
+            Enable OneNET Fuse OTA firmware upgrade support.
+            This allows the device to check for firmware updates and download them
+            from the OneNET cloud platform.
+
+    config BSP_ONENET_OTA_CURRENT_VERSION
+        string "Current firmware version for OTA"
+        default "V1.0"
+        depends on BSP_ONENET_USING_OTA
+        help
+            The current firmware version string reported to OneNET OTA server.
+
+    config BSP_ONENET_OTA_ACCESS_KEY
+        string "OTA access key (base64 encoded)"
+        default "0edef2e927d242a5bc8d154160cd70e1"
+        depends on BSP_ONENET_USING_OTA
+        help
+            Base64 encoded access key for OneNET Fuse OTA authentication.
+
+    config BSP_ONENET_OTA_AUTH_RES
+        string "OTA auth resource string"
+        default "userid/510792"
+        depends on BSP_ONENET_USING_OTA
+        help
+            Resource string for OneNET Fuse OTA token generation, e.g. userid/123456.
+
+    config BSP_ONENET_OTA_DEFAULT_PATH
+        string "Default OTA storage path"
+        default "/spi-flash/ota_fw.bin"
+        depends on BSP_ONENET_USING_OTA
+        help
+            Default file path for storing downloaded OTA firmware on DFS.
+            Must be on a writable filesystem (e.g. /spi-flash/ or /sdcard/).
+
     config BSP_ONENET_INFO_DEVID
         string "Device name"
         default "STM32F407VGT6_SKYSTAR"

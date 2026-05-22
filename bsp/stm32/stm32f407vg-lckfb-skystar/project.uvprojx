@@ -336,9 +336,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls />
-              <Define>__STDC_LIMIT_MACROS, RT_USING_LIBC, LFS_CONFIG=lfs_config.h, __CLK_TCK=RT_TICK_PER_SECOND, STM32F407xx, RT_USING_ARMLIBC, USE_HAL_DRIVER, __RTTHREAD__</Define>
+              <Define>__CLK_TCK=RT_TICK_PER_SECOND, STM32F407xx, __STDC_LIMIT_MACROS, __RTTHREAD__, RT_USING_ARMLIBC, RT_USING_LIBC, LFS_CONFIG=lfs_config.h, USE_HAL_DRIVER</Define>
               <Undefine />
-              <IncludePath>board\ports\esp8266-01s;..\..\..\components\drivers\usb\cherryusb\class\midi;..\..\..\components\drivers\usb\cherryusb\class\audio;board\ports\onenet;..\..\..\components\drivers\include;..\..\..\components\net\sal\include\socket\sys_socket;..\..\..\components\libc\posix\io\epoll;..\..\..\components\drivers\usb\cherryusb\class\hid;board\ports\usb;..\..\..\components\dfs\dfs_v1\filesystems\devfs;..\..\..\components\drivers\usb\cherryusb\class\vendor\wifi;board\ports\onenet\rtthread-package-onenet\ports;..\..\..\components\libc\compilers\common\include;..\..\..\components\drivers\include;..\..\..\components\net\utest;..\..\..\components\net\at\at_socket;..\..\..\components\net\sal\include\dfs_net;..\..\..\components\drivers\usb\cherryusb\class\dfu;..\libraries\HAL_Drivers\drivers\config;..\..\..\components\drivers\usb\cherryusb\class\video;..\..\..\include;packages\littlefs-latest;..\..\..\components\drivers\usb\cherryusb;..\..\..\components\drivers\spi\sfud\inc;board\ports\led;..\..\..\components\net\netdev\include;..\libraries\HAL_Drivers\drivers\drv_flash;..\..\..\components\drivers\include;..\..\..\components\drivers\usb\cherryusb\class\cdc;..\..\..\components\drivers\include;..\..\..\components\libc\posix\io\eventfd;..\..\..\components\drivers\include;..\..\..\components\dfs\dfs_v1\filesystems\romfs;..\..\..\components\utilities\resource;..\..\..\components\drivers\usb\cherryusb\class\vendor\net;..\..\..\components\drivers\usb\cherryusb\class\wireless;.;..\..\..\components\drivers\include;..\..\..\libcpu\arm\cortex-m4;packages\cJSON-v1.7.17;..\..\..\components\drivers\spi;..\..\..\components\dfs\dfs_v1\include;..\..\..\components\drivers\include;..\..\..\components\drivers\usb\cherryusb\class\hub;..\..\..\components\drivers\include;..\..\..\components\dfs\dfs_v1\filesystems\elmfat;packages\at_device-latest\inc;..\..\..\components\drivers\usb\cherryusb\class\msc;..\..\..\components\drivers\phy;applications;packages\stm32f4_cmsis_driver-latest\Include;..\..\..\components\libc\posix\io\poll;..\..\..\components\net\sal\include;..\..\..\libcpu\arm\common;packages\CMSIS-Core-latest\Include;..\..\..\components\drivers\include;..\..\..\components\fal\inc;..\..\..\components\drivers\usb\cherryusb\core;..\..\..\components\drivers\usb\cherryusb\class\serial;..\..\..\components\net\sal\impl;..\..\..\components\drivers\usb\cherryusb\class\adb;..\libraries\HAL_Drivers\drivers;board\CubeMX_Config\Core\Inc;packages\pahomqtt-latest\MQTTClient-RT;board\ports\w25q128;..\..\..\components\drivers\include;..\..\..\components\drivers\include;..\..\..\components\finsh;board\ports;..\..\..\components\drivers\usb\cherryusb\common;board\ports\onenet\rtthread-package-onenet\inc;..\libraries\HAL_Drivers;packages\pahomqtt-latest\MQTTPacket\src;..\..\..\components\libc\compilers\common\extension\fcntl\octal;board\ports\sdcard;packages\stm32f4_hal_driver-latest\Inc\Legacy;..\..\..\components\libc\posix\ipc;..\..\..\components\drivers\include;..\..\..\components\drivers\usb\cherryusb\osal;..\..\..\components\libc\compilers\common\extension;packages\stm32f4_hal_driver-latest\Inc;..\..\..\components\net\at\include;packages\at_device-latest\class\esp8266;..\..\..\components\drivers\smp_call;..\..\..\components\net\sal\include\socket;board</IncludePath>
+              <IncludePath>packages\at_device-latest\class\esp8266;..\..\..\components\drivers\include;..\..\..\components\drivers\usb\cherryusb\class\audio;..\..\..\components\dfs\dfs_v1\include;..\..\..\components\drivers\phy;board;..\..\..\components\net\sal\include\socket\sys_socket;board\ports\w25q128;..\..\..\components\drivers\spi\sfud\inc;..\..\..\components\fal\inc;..\..\..\components\net\netdev\include;..\..\..\components\dfs\dfs_v1\filesystems\elmfat;..\..\..\components\net\sal\include;..\..\..\components\drivers\usb\cherryusb\class\hub;packages\webclient-v2.2.0\inc;..\..\..\components\drivers\usb\cherryusb\class\wireless;..\..\..\components\utilities\resource;..\..\..\components\drivers\usb\cherryusb\class\msc;..\..\..\components\drivers\usb\cherryusb\class\serial;board\ports\usb;applications;..\..\..\components\drivers\usb\cherryusb\class\adb;board\ports\sdcard;..\..\..\components\libc\posix\io\poll;..\..\..\components\drivers\spi;board\ports\led;..\..\..\include;..\..\..\components\drivers\include;..\..\..\components\drivers\usb\cherryusb\class\cdc;board\ports\esp8266-01s;..\..\..\components\net\utest;board\ports\onenet\rtthread-package-onenet\inc;..\..\..\components\drivers\include;..\..\..\components\dfs\dfs_v1\filesystems\devfs;..\..\..\components\drivers\include;..\libraries\HAL_Drivers\drivers\config;packages\pahomqtt-latest\MQTTClient-RT;..\..\..\components\drivers\include;packages\at_device-latest\inc;..\..\..\components\finsh;.;..\..\..\components\libc\posix\ipc;..\..\..\components\libc\compilers\common\extension\fcntl\octal;board\ports;..\libraries\HAL_Drivers\drivers\drv_flash;..\..\..\components\drivers\include;..\..\..\components\net\sal\impl;packages\CMSIS-Core-latest\Include;..\..\..\components\drivers\include;..\..\..\components\drivers\include;..\..\..\components\drivers\smp_call;packages\stm32f4_hal_driver-latest\Inc;..\..\..\components\drivers\include;packages\cJSON-v1.7.17;..\..\..\components\net\at\include;board\ports\onenet;..\..\..\components\drivers\usb\cherryusb\class\vendor\display;..\..\..\components\dfs\dfs_v1\filesystems\romfs;..\..\..\components\drivers\include;..\..\..\components\libc\posix\io\eventfd;..\..\..\components\drivers\usb\cherryusb\class\midi;..\..\..\components\drivers\usb\cherryusb\class\vendor\net;..\..\..\components\drivers\usb\cherryusb\class\hid;..\..\..\components\drivers\usb\cherryusb\class\vendor\wifi;..\..\..\libcpu\arm\common;..\..\..\components\libc\compilers\common\extension;packages\stm32f4_cmsis_driver-latest\Include;..\..\..\components\libc\compilers\common\include;packages\littlefs-latest;..\..\..\components\drivers\usb\cherryusb;..\..\..\components\drivers\usb\cherryusb\osal;..\..\..\components\drivers\usb\cherryusb\core;..\..\..\libcpu\arm\cortex-m4;..\..\..\components\net\sal\include\dfs_net;packages\pahomqtt-latest\MQTTPacket\src;..\..\..\components\drivers\usb\cherryusb\common;..\..\..\components\drivers\usb\cherryusb\class\dfu;..\..\..\components\net\at\at_socket;..\..\..\components\drivers\include;..\..\..\components\net\sal\include\socket;..\libraries\HAL_Drivers\drivers;..\libraries\HAL_Drivers;..\..\..\components\drivers\usb\cherryusb\class\video;..\..\..\components\libc\posix\io\epoll;..\..\..\components\drivers\usb\cherryusb\class\vendor\xbox;..\..\..\components\drivers\include;board\ports\onenet\rtthread-package-onenet\ports;board\CubeMX_Config\Core\Inc;packages\stm32f4_hal_driver-latest\Inc\Legacy</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -469,6 +469,13 @@
           </Files>
           <Files>
             <File>
+              <FileName>cdc_hid_template.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>board\ports\usb\cdc_hid_template.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
               <FileName>cdc_msc_blkdev_template.c</FileName>
               <FileType>1</FileType>
               <FilePath>board\ports\usb\cdc_msc_blkdev_template.c</FilePath>
@@ -483,9 +490,23 @@
           </Files>
           <Files>
             <File>
+              <FileName>hid_custom_template.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>board\ports\usb\hid_custom_template.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
               <FileName>msc_blkdev_template.c</FileName>
               <FileType>1</FileType>
               <FilePath>board\ports\usb\msc_blkdev_template.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>msc_hid_template.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>board\ports\usb\msc_hid_template.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1879,6 +1900,13 @@
           </Files>
           <Files>
             <File>
+              <FileName>onenet_ota.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>board\ports\onenet\rtthread-package-onenet\src\onenet_ota.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
               <FileName>onenet_port.c</FileName>
               <FileType>1</FileType>
               <FilePath>board\ports\onenet\rtthread-package-onenet\ports\onenet_port.c</FilePath>
@@ -2264,23 +2292,23 @@
           </Files>
           <Files>
             <File>
+              <FileName>usbd_cdc_acm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\components\drivers\usb\cherryusb\class\cdc\usbd_cdc_acm.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>usbd_hid.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\components\drivers\usb\cherryusb\class\hid\usbd_hid.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
               <FileName>usbd_msc.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\components\drivers\usb\cherryusb\class\msc\usbd_msc.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>usb_msh.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\components\drivers\usb\cherryusb\platform\rtthread\usb_msh.c</FilePath>
-            </File>
-          </Files>
-          <Files>
-            <File>
-              <FileName>usb_check.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\components\drivers\usb\cherryusb\platform\rtthread\usb_check.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2301,6 +2329,16 @@
               <FileName>drv_w25q128.c</FileName>
               <FileType>1</FileType>
               <FilePath>board\ports\w25q128\drv_w25q128.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>WebClient</GroupName>
+          <Files>
+            <File>
+              <FileName>webclient.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>packages\webclient-v2.2.0\src\webclient.c</FilePath>
             </File>
           </Files>
         </Group>

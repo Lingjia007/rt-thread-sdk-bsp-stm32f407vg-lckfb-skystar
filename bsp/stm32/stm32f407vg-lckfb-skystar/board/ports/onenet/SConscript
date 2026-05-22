@@ -10,7 +10,10 @@ if GetDepend(['BSP_USING_ONENET']):
     
     if GetDepend(['BSP_ONENET_USING_HTTP']) or GetDepend(['BSP_ONENET_USING_AUTO_REGISTER']):
         src += Glob('rtthread-package-onenet/src/onenet_http.c')
-    
+
+    if GetDepend(['BSP_ONENET_USING_OTA']):
+        src += Glob('rtthread-package-onenet/src/onenet_ota.c')
+
     src += Glob('rtthread-package-onenet/ports/*.c')
     
     if GetDepend(['BSP_ONENET_USING_SAMPLE']):
